@@ -8,7 +8,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.sniecinska.bingwatcher.fragments.ExploreFragment;
+import com.sniecinska.bingwatcher.fragments.SearchFragment;
+import com.sniecinska.bingwatcher.fragments.TrackedShowsFragment;
+
 public class MainActivity extends AppCompatActivity {
+    Fragment mFragment;
+    FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +29,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                        Fragment mFragment = null;
-                        FragmentManager fragmentManager = getSupportFragmentManager();
-
+                        mFragment = null;
+                        fragmentManager = getSupportFragmentManager();
 
                         switch (item.getItemId()) {
                             case R.id.action_tracked:

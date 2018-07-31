@@ -6,7 +6,26 @@
     <string name="bottom_nav_item_2">Search</string>
     <string name="bottom_nav_item_3">Explore</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Show Detail -->
+    <string name="show_title">Show title</string>
+    <string name="label_episodes">Next episode</string>
+
+
+    <!-- Retrofit connection-->
+    <string name="api_key">4681755dbe9184e2d9a51e441de6985b</string>
+    <string name="based_url">https://api.themoviedb.org/3</string>
+
+    <!-- Sort by | Explore fragment -->
+    <string name="sort_by_popular">Popular shows</string>
+    <string name="sort_by_top_rated">Top rated shows</string>
+    <string name="app_title_popular">Popular TV shows</string>
+    <string name="app_title_top_rated">Top rated TV shows</string>
+    <string name="TV_SHOW">TV_SHOW</string>
+
+    <string name="sort">Sort</string>
+
+    <!-- widget -->
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 
 </resources>
