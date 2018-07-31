@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1030838472143",
+    "firebase_url": "https://bingwatcher-ewa.firebaseio.com",
+    "project_id": "bingwatcher-ewa",
+    "storage_bucket": "bingwatcher-ewa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1030838472143:android:8bbcad66d1943eb7",
+        "android_client_info": {
+          "package_name": "com.sniecinska.bingwatcher"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1030838472143-smmkvpovtve0dpa23qeg3pt9tf2s9p41.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmBVKf8Rjhuy01b_0DG1RjDvDoS1KjEnM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

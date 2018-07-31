@@ -24,7 +24,10 @@ public class TvSeries implements Parcelable {
     String overview;
     String poster_path;
 
-    protected TvSeries(Parcel in) {
+    public TvSeries(){
+    }
+
+    private TvSeries(Parcel in) {
         original_name = in.readString();
         name = in.readString();
         popularity = in.readString();

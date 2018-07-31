@@ -45,6 +45,7 @@ public class ExploreFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
+
         sharedpreferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
         fragmentManager = getFragmentManager();
 
