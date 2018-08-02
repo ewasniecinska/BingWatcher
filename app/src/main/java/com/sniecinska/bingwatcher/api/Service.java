@@ -1,8 +1,7 @@
 package com.sniecinska.bingwatcher.api;
 
-import com.sniecinska.bingwatcher.models.ExternalApiResult;
-import com.sniecinska.bingwatcher.models.NextEpisode;
 import com.sniecinska.bingwatcher.models.PopularResult;
+import com.sniecinska.bingwatcher.models.TvSeriesDetails;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -24,9 +23,6 @@ public interface Service {
     @GET("search/tv")
     Call<PopularResult> getSearchResults(@Query("api_key") String user, @Query("query") String query);
 
-    @GET("tv/{tv_id}/external_ids")
-    Call<ExternalApiResult> getExternalID(@Path("tv_id") int tv_id, @Query("api_key") String user);
-
-    @GET("shows/{id}/next_episode")
-    Call<NextEpisode> getNextEpisode(@Path("id") String id);
+    @GET("tv/{tv_id}")
+    Call<TvSeriesDetails> getSeriesDetails(@Path("tv_id") int tv_id, @Query("api_key") String user);
 }

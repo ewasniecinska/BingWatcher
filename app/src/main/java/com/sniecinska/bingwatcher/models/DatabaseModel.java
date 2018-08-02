@@ -6,12 +6,13 @@ package com.sniecinska.bingwatcher.models;
 
 public class DatabaseModel {
     String user_id;
-    TvSeries tvSeries;
+    String series_id;
+    TvSeriesDetails tvSeries;
 
-    public DatabaseModel(String user_id, TvSeries tvSeries) {
+    public DatabaseModel(String user_id, String series_id, TvSeriesDetails tvSeries) {
         this.tvSeries = tvSeries;
+        this.series_id = series_id;
         this.user_id = user_id;
     }
-
 
 }

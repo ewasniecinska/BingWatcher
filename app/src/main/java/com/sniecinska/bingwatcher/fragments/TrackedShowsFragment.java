@@ -7,11 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,7 +35,7 @@ public class TrackedShowsFragment extends Fragment {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     FragmentManager fragmentManager;
-
+    private FirebaseAuth mAuth;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,17 +49,29 @@ public class TrackedShowsFragment extends Fragment {
 
         gridLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 1);
         recyclerView.setLayoutManager(gridLayoutManager);
+
+        getDataFromDb();
+
+        return view;
+    }
+
+    private void getDataFromDb(){
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference().child("users");
+
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<TvSeries> seriesList = new ArrayList<>();
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     String uid = ds.child("user_id").getValue(String.class);
-                    TvSeries tvSeries = ds.child("tvSeries").getValue(TvSeries.class);
-                    seriesList.add(tvSeries);
-                    Log.d("DB_TEST", String.valueOf(seriesList.size()));
+                    mAuth = FirebaseAuth.getInstance();
+                    FirebaseUser currentUser = mAuth.getCurrentUser();
+                    if(uid.equals(currentUser.getUid())){
+                        TvSeries tvSeries = ds.child("tvSeries").getValue(TvSeries.class);
+                        seriesList.add(tvSeries);
+                    }
                 }
-
                 recyclerView.setAdapter(new PopularSeriesAdapter(fragmentManager, seriesList));
             }
 
@@ -66,27 +79,18 @@ public class TrackedShowsFragment extends Fragment {
             public void onCancelled(DatabaseError databaseError) {}
         };
 
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference().child("users");
         databaseReference.addListenerForSingleValueEvent(valueEventListener);
-
-
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String post = String.valueOf(dataSnapshot.getValue());
-                Log.d("DB_TEST", post);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-
-
-        return view;
     }
-
 
 }

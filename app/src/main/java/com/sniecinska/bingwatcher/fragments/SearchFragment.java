@@ -32,7 +32,6 @@ public class SearchFragment extends Fragment {
     @BindView(R.id.search_view) SearchView searchView;
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -42,9 +41,22 @@ public class SearchFragment extends Fragment {
 
         initToolbar();
 
-        fragmentManager = getFragmentManager();
+        initSearch();
 
-        searchView.setQueryHint("Title of TV series");
+        fragmentManager = getFragmentManager();
+        gridLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 1);
+        recyclerView.setLayoutManager(gridLayoutManager);
+
+        return view;
+    }
+
+    private void initToolbar(){
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        getActivity().setTitle(getString(R.string.app_name));
+    }
+
+    private void initSearch(){
+        searchView.setQueryHint(getString(R.string.search_hint));
         searchView.onActionViewExpanded();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -62,21 +74,12 @@ public class SearchFragment extends Fragment {
                 return false;
             }
         });
-
-
-        gridLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 1);
-        recyclerView.setLayoutManager(gridLayoutManager);
-
-
-
-        return view;
     }
 
-    private void initToolbar(){
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        getActivity().setTitle(getString(R.string.app_name));
+    public void getSearchResults(String query){
+        call = RetrofitConnector.getService().getSearchResults(getString(R.string.api_key), query);
+        callApi(call);
     }
-
 
     public void callApi(Call call){
         call.enqueue(new Callback<PopularResult>() {
@@ -90,11 +93,6 @@ public class SearchFragment extends Fragment {
             public void onFailure(Call<PopularResult> call, Throwable throwable) {
             }
         });
-    }
-
-    public void getSearchResults(String query){
-        call = RetrofitConnector.getService().getSearchResults(getString(R.string.api_key), query);
-        callApi(call);
     }
 
 }

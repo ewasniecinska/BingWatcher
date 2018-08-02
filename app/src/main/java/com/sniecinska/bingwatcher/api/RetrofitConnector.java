@@ -22,17 +22,4 @@ public class RetrofitConnector {
         return service;
     }
 
-    public static Retrofit getRetrofit2() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.trakt.tv/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        return retrofit;
-    }
-
-    public static Service getService2(){
-        Service service = getRetrofit2().create(Service.class);
-        return service;
-    }
-
 }

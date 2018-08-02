@@ -1,11 +1,12 @@
 package com.sniecinska.bingwatcher.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.os.Parcelable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -16,12 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -29,10 +26,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.sniecinska.bingwatcher.R;
 import com.sniecinska.bingwatcher.api.RetrofitConnector;
 import com.sniecinska.bingwatcher.models.DatabaseModel;
-import com.sniecinska.bingwatcher.models.ExternalApiResult;
-import com.sniecinska.bingwatcher.models.NextEpisode;
+import com.sniecinska.bingwatcher.models.Episode;
 import com.sniecinska.bingwatcher.models.TvSeries;
+import com.sniecinska.bingwatcher.models.TvSeriesDetails;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,14 +41,19 @@ import retrofit2.Response;
 
 public class ShowDetailFragment extends Fragment {
     TvSeries tvSeries;
-    String imbd;
+    TvSeriesDetails tvSeriesDetails;
+    Episode episode;
+
     private FirebaseAnalytics firebaseAnalytics;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
 
-    String user_id;
+    FirebaseUser currentUser;
+
+    FragmentManager fragmentManager;
+    Bundle bundle;
+    Episode ewa;
 
     @BindView(R.id.show_title)
     TextView title;
@@ -57,18 +61,26 @@ public class ShowDetailFragment extends Fragment {
     ImageView backpathPoster;
     @BindView(R.id.floating_action_button)
     FloatingActionButton addToTrackedButton;
+    @BindView(R.id.label_episodes)
+    TextView labelEpisodes;
     @BindView(R.id.show_overview)
     TextView overview;
     @BindView(R.id.next_episode_card_view)
-    CardView nextEpisode;
+    CardView nextEpisodeCard;
+    @BindView(R.id.all_episodes)
+    CardView allEpisodes;
+    @BindView(R.id.next_episode_name)
+    TextView nextEpisodeName;
+    @BindView(R.id.next_episode_number)
+    TextView nextEpisodeNumber;
+    @BindView(R.id.next_episode_date)
+    TextView nextEpisodeDate;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.collapsing_toolbar_layout)
     CollapsingToolbarLayout collapsingToolbarLayout;
     @BindView(R.id.app_bar_layout)
     AppBarLayout appBarLayout;
-    @BindView(R.id.next_episode_date)
-    TextView nextEpisodeDate;
     @BindView(R.id.nested_scroll_view)
     NestedScrollView nestedScrollView;
 
@@ -76,7 +88,7 @@ public class ShowDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            tvSeries = bundle.getParcelable("TV_SHOW");
+            tvSeries = bundle.getParcelable(getString(R.string.TV_SHOW));
         }
         super.onCreate(savedInstanceState);
     }
@@ -88,31 +100,32 @@ public class ShowDetailFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        initToolbar();
+        getSeriesDetails();
 
         initFirebaseAnalytics();
-
         initFirebaseDatabase();
 
-        addToTrackedButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_tv));
+        initToolbar();
 
         Picasso.get()
-                .load("http://image.tmdb.org/t/p/original/" + tvSeries.getBackdropPath())
+                .load(getString(R.string.image_based_url) + tvSeries.getBackdropPath())
                 .into(backpathPoster);
 
         overview.setText(tvSeries.getOverview());
+        title.setText(tvSeries.getTitle());
 
+        addToTrackedButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_tv));
+
+        //Todo: change FAB when user has already add movie to tracked
         addToTrackedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatabaseModel series = new DatabaseModel(user_id, tvSeries);
-
+                DatabaseModel series = new DatabaseModel(currentUser.getUid(), String.valueOf(tvSeries.getId()), tvSeriesDetails);
                 databaseReference.push().setValue(series);
 
             }
         });
 
-        callApi();
 
         return view;
 
@@ -171,93 +184,85 @@ public class ShowDetailFragment extends Fragment {
 
     private void initFirebaseDatabase() {
         mAuth = FirebaseAuth.getInstance();
-        //FirebaseUser currentUser = mAuth.getCurrentUser();
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    Log.d("DB_TEST", "onAuthStateChanged:signed_in:" + user.getUid());
-                    user_id = user.getUid();
-                } else {
-                    // User is signed out
-                    Log.d("DB_TEST", "onAuthStateChanged:signed_out");
-                }
-
-            }
-        };
-
-        mAuth.signInAnonymously()
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d("DB_TEST", "OnComplete : " + task.isSuccessful());
-                        if (!task.isSuccessful()) {
-                            Log.w("DB_TEST", "Failed : ", task.getException());
-                            Toast.makeText(getActivity().getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-
-
+        currentUser = mAuth.getCurrentUser();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference().child("users");
     }
 
-    public void callApi() {
-        Call call = RetrofitConnector.getService().getExternalID(tvSeries.getId(), getString(R.string.api_key));
+    public void getSeriesDetails() {
+        Call call = RetrofitConnector.getService().getSeriesDetails(tvSeries.getId(), getString(R.string.api_key));
 
-
-        call.enqueue(new Callback<ExternalApiResult>() {
+        call.enqueue(new Callback<TvSeriesDetails>() {
             @Override
-            public void onResponse(Call<ExternalApiResult> call, Response<ExternalApiResult> response) {
-                if (response.body() != null) {
-                    imbd = response.body().getTvdbId();
-                    Log.d("TBVD", imbd);
-                    getLastEpisode(imbd);
-                }
-            }
+            public void onResponse(Call<TvSeriesDetails> call, Response<TvSeriesDetails> response) {
+                tvSeriesDetails = response.body();
 
-            @Override
-            public void onFailure(Call<ExternalApiResult> call, Throwable throwable) {
-            }
-        });
-    }
-
-    public void getLastEpisode(String movie_id) {
-        Call call = RetrofitConnector.getService2().getNextEpisode("game-of-thrones");
-
-
-        call.enqueue(new Callback<NextEpisode>() {
-            @Override
-            public void onResponse(Call<NextEpisode> call, Response<NextEpisode> response) {
-                if (response.body() == null) {
-                    Log.d("TITLE", "null");
+                if(tvSeriesDetails.getNextEpisode() == null){
+                    updateViewForLastEpisode();
                 } else {
-                    Log.d("TITLE", response.body().getTitle());
+                    updateViewForNextEpisode();
                 }
 
+                updateViewForAllSeasons();
             }
 
             @Override
-            public void onFailure(Call<NextEpisode> call, Throwable throwable) {
+            public void onFailure(Call<TvSeriesDetails> call, Throwable throwable) {
+                Log.e(getString(R.string.RETROFIT_ERROR), throwable.getMessage());
             }
         });
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
+    public void updateViewForLastEpisode() {
+        labelEpisodes.setText("Last Episode");
+        episode = tvSeriesDetails.getLastEpisode();
+
+        nextEpisodeName.setText(episode.getName());
+        nextEpisodeNumber.setText("Session " + episode.getSeasonNumber() + ", Episode " + episode.getEpisodeNumber());
+        nextEpisodeDate.setVisibility(View.GONE);
+        setEpisodeButton(episode);
     }
 
-    // release listener in onStop
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
+    public void updateViewForNextEpisode() {
+        labelEpisodes.setText("Next Episode");
+        episode = tvSeriesDetails.getNextEpisode();
+
+        nextEpisodeName.setText(episode.getName());
+        nextEpisodeNumber.setText("Session " + episode.getSeasonNumber() + ", Episode " + episode.getEpisodeNumber());
+        nextEpisodeDate.setText(episode.getAirDate());
+        setEpisodeButton(episode);
+    }
+
+    public void setEpisodeButton(final Episode episode) {
+        fragmentManager = getActivity().getSupportFragmentManager();
+        nextEpisodeCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EpisodeFragment fragment = new EpisodeFragment();
+                bundle = new Bundle();
+                bundle.putParcelable(getString(R.string.EPISODE), episode);
+                fragment.setArguments(bundle);
+
+                fragmentManager.beginTransaction()
+                        .addToBackStack(null)
+                        .replace(R.id.fragment_box, fragment).commit();
+            }
+        });
+    }
+
+    public void updateViewForAllSeasons() {
+        allEpisodes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SeasonsListFragment fragment = new SeasonsListFragment();
+                bundle = new Bundle();
+                bundle.putParcelableArrayList(getString(R.string.SEASONS), (ArrayList<? extends Parcelable>) tvSeriesDetails.getSeasons());
+                fragment.setArguments(bundle);
+
+                fragmentManager.beginTransaction()
+                        .addToBackStack(null)
+                        .replace(R.id.fragment_box, fragment).commit();
+            }
+        });
     }
 }
