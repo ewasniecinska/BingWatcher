@@ -7,10 +7,12 @@ package com.sniecinska.bingwatcher.models;
 public class DatabaseModel {
     String user_id;
     String series_id;
-    TvSeriesDetails tvSeries;
+    long air_date;
+    TvSeriesDetails tv_series_details;
 
-    public DatabaseModel(String user_id, String series_id, TvSeriesDetails tvSeries) {
-        this.tvSeries = tvSeries;
+    public DatabaseModel(String user_id, String series_id, long air_date, TvSeriesDetails tv_series_details) {
+        this.tv_series_details = tv_series_details;
+        this.air_date = air_date;
         this.series_id = series_id;
         this.user_id = user_id;
     }

@@ -8,30 +8,55 @@
 
     <!-- Show Detail -->
     <string name="show_title">Show title</string>
-    <string name="label_episodes">Next episode</string>
-
+    <string name="last_episode">Last Episode</string>
+    <string name="next_episode">Next Episode</string>
 
     <!-- Retrofit connection-->
     <string name="api_key">4681755dbe9184e2d9a51e441de6985b</string>
     <string name="based_url">https://api.themoviedb.org/3</string>
     <string name="image_based_url">http://image.tmdb.org/t/p/original</string>
+    <string name="poster_based_url">http://image.tmdb.org/t/p/w185/</string>
+    <string name="RETROFIT_ERROR">RETROFIT_ERROR</string>
 
+    <!-- Database -->
+    <string name="DB_CHILD_USERS">users</string>
+    <string name="DB_CHILD_USER_ID">user_id</string>
+    <string name="DB_CHILD_TVSERIES">tvSeries</string>
+    <string name="DB_CHILD_TVSERIES_DETAILS">tv_series_details</string>
+
+    <!-- Bundles -->
+    <string name="TV_SHOW">TV_SHOW</string>
+    <string name="EPISODE">EPISODE</string>
+    <string name="SEASONS">SEASONS</string>
+    <string name="TV_ID">TV_ID</string>
+    <string name="SEASON_NUMBER">SEASON_NUMBER</string>
+    <string name="EPISODE_NUMBER">EPISODE_NUMBER</string>
+    <string name="SERIES_DETAILS">SERIES_DETAILS</string>
+    <string name="SEASON">SEASON</string>
 
     <!-- Sort by | Explore fragment -->
     <string name="sort_by_popular">Popular shows</string>
     <string name="sort_by_top_rated">Top rated shows</string>
     <string name="app_title_popular">Popular TV shows</string>
     <string name="app_title_top_rated">Top rated TV shows</string>
-
     <string name="sort">Sort</string>
+
+    <!-- Search Fragment-->
+    <string name="search_hint">Title of TV series</string>
 
     <!-- widget -->
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
-    <string name="search_hint">Title of TV series</string>
-    <string name="TV_SHOW">TV_SHOW</string>
-    <string name="RETROFIT_ERROR">RETROFIT_ERROR</string>
-    <string name="EPISODE">EPISODE</string>
-    <string name="SEASONS">SEASONS</string>
+
+    <!-- Other -->
+    <string name="Today">Today</string>
+    <string name="NO_DATA">No date</string>
+    <string name="NO_DATE_YET">No date yet</string>
+    <string name="NO_DATA_YET">No data yet</string>
+    <string name="DB_CHILD_SERIES_ID">series_id</string>
+    <string name="label_air_date">Air date:</string>
+    <string name="label_episodes_number">Episodes number:</string>
+    <string name="series_over">Series has ended</string>
+
 
 </resources>

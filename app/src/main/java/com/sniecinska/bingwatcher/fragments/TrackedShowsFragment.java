@@ -1,6 +1,7 @@
 package com.sniecinska.bingwatcher.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -17,13 +18,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.sniecinska.bingwatcher.R;
-import com.sniecinska.bingwatcher.adapters.PopularSeriesAdapter;
-import com.sniecinska.bingwatcher.models.TvSeries;
+import com.sniecinska.bingwatcher.adapters.TrackedShowsListAdapter;
+import com.sniecinska.bingwatcher.models.TvSeriesDetails;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
+import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,6 +39,9 @@ public class TrackedShowsFragment extends Fragment {
     DatabaseReference databaseReference;
     FragmentManager fragmentManager;
     private FirebaseAuth mAuth;
+    ArrayList<TvSeriesDetails> seriesList;
+    Date date;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,51 +52,44 @@ public class TrackedShowsFragment extends Fragment {
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
 
         fragmentManager = getFragmentManager();
-
         gridLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 1);
         recyclerView.setLayoutManager(gridLayoutManager);
+
 
         getDataFromDb();
 
         return view;
     }
 
-    private void getDataFromDb(){
+    private void getDataFromDb() {
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference().child("users");
-
-        ValueEventListener valueEventListener = new ValueEventListener() {
+        //databaseReference = firebaseDatabase.getReference().child(getString(R.string.DB_CHILD_USERS));
+        databaseReference = firebaseDatabase.getReference();
+        final TreeMap treeMap = new TreeMap<Date, TvSeriesDetails>();
+        Query peopleBloodTypeQuery = databaseReference.child("users").orderByChild("air_date");
+        peopleBloodTypeQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                List<TvSeries> seriesList = new ArrayList<>();
+                seriesList = new ArrayList<>();
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String uid = ds.child("user_id").getValue(String.class);
+                    String uid = ds.child(getString(R.string.DB_CHILD_USER_ID)).getValue(String.class);
                     mAuth = FirebaseAuth.getInstance();
                     FirebaseUser currentUser = mAuth.getCurrentUser();
                     if(uid.equals(currentUser.getUid())){
-                        TvSeries tvSeries = ds.child("tvSeries").getValue(TvSeries.class);
+                        TvSeriesDetails tvSeries = ds.child(getString(R.string.DB_CHILD_TVSERIES_DETAILS)).getValue(TvSeriesDetails.class);
                         seriesList.add(tvSeries);
                     }
                 }
-                recyclerView.setAdapter(new PopularSeriesAdapter(fragmentManager, seriesList));
+                recyclerView.setAdapter(new TrackedShowsListAdapter(getActivity().getApplicationContext(), fragmentManager, seriesList));
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        };
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-        databaseReference.addListenerForSingleValueEvent(valueEventListener);
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String post = String.valueOf(dataSnapshot.getValue());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
             }
         });
+
     }
+
 
 }

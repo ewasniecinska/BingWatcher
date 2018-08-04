@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.NestedScrollView;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,9 +17,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sniecinska.bingwatcher.R;
+import com.sniecinska.bingwatcher.adapters.EpisodesListAdapter;
 import com.sniecinska.bingwatcher.api.RetrofitConnector;
 import com.sniecinska.bingwatcher.models.EpisodeDetails;
+import com.sniecinska.bingwatcher.models.Season;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,85 +36,72 @@ import retrofit2.Response;
  * Created by ewasniecinska on 02.08.2018.
  */
 
-public class EpisodeFragment extends Fragment {
-    EpisodeDetails episodeDetails;
+public class SeasonsDetailFragment extends Fragment {
+    Season season;
+    int tvId;
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     @BindView(R.id.collapsing_toolbar_layout)
     CollapsingToolbarLayout collapsingToolbarLayout;
     @BindView(R.id.app_bar_layout)
     AppBarLayout appBarLayout;
-    @BindView(R.id.nested_scroll_view)
-    NestedScrollView nestedScrollView;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     @BindView(R.id.episode_overview)
     TextView overview;
-    @BindView(R.id.episode_image)
+    @BindView(R.id.show_backpath)
     ImageView episodeImage;
     @BindView(R.id.episode_title)
     TextView title;
     @BindView(R.id.episode_air_date)
     TextView airDate;
     @BindView(R.id.episode_number)
-    TextView episodeNumberView;
-    @BindView(R.id.divider)
-    ImageView divider;
+    TextView episodeNumber;
 
-    int tvId;
-    int seasonNumber;
-    int episodeNumber;
+    FragmentManager fragmentManager;
+    GridLayoutManager gridLayoutManager;
+    EpisodesListAdapter adapter;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
+
+    List<EpisodeDetails> episodeList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            tvId = bundle.getInt("TV_ID");
-            seasonNumber = bundle.getInt("SEASON_NUMBER");
-            episodeNumber = bundle.getInt("EPISODE_NUMBER");
+            season = bundle.getParcelable(getString(R.string.SEASON));
+            tvId = bundle.getInt(getString(R.string.TV_ID));
         }
-
         super.onCreate(savedInstanceState);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_episode, container, false);
+        View view = inflater.inflate(R.layout.fragment_season, container, false);
         ButterKnife.bind(this, view);
 
-        getEpisodeAndUpdateUI();
-
-        return view;
-    }
-
-    public void getEpisodeAndUpdateUI() {
-        Call call = RetrofitConnector.getService().getEpisodeDetails(tvId, seasonNumber, episodeNumber, getString(R.string.api_key));
-        call.enqueue(new Callback<EpisodeDetails>() {
-            @Override
-            public void onResponse(Call<EpisodeDetails> call, Response<EpisodeDetails> response) {
-                if(response.body() != null) {
-                    episodeDetails = response.body();
-                    updateUI();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<EpisodeDetails> call, Throwable throwable) {
-                Log.e(getString(R.string.RETROFIT_ERROR), throwable.getMessage());
-            }
-        });
-    }
-
-    public void updateUI() {
         initToolbar();
 
         Picasso.get()
-                .load(getString(R.string.image_based_url) + episodeDetails.getStillPath())
+                .load(getString(R.string.image_based_url) + season.getPosterPath())
                 .into(episodeImage);
 
-        overview.setText(episodeDetails.getOverview());
-        title.setText(episodeDetails.getName());
-        airDate.setText("Air date: " + episodeDetails.getAirDate());
-        episodeNumberView.setText("Session " + episodeDetails.getSeasonNumber() + ", Episode " + episodeDetails.getEpisodeNumber());
+        overview.setText(season.getOverview());
+        title.setText(season.getName());
+        airDate.setText(getString(R.string.label_air_date) + season.getAirDate());
+        episodeNumber.setText(getString(R.string.label_episodes_number) + season.getEpisodeCount());
+
+        fragmentManager = getFragmentManager();
+        gridLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 1);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        episodeList = new ArrayList<>();
+        adapter = new EpisodesListAdapter(getActivity().getApplicationContext(), fragmentManager, episodeList, tvId);
+        recyclerView.setAdapter(adapter);
+
+        getEpisodeDetailsList();
+
+        return view;
     }
 
     private void initToolbar() {
@@ -122,20 +116,18 @@ public class EpisodeFragment extends Fragment {
             }
         });
 
-        if(episodeDetails.getStillPath() == null || episodeDetails.getStillPath() == ""){
-            appBarLayout.setExpanded(false);
-        }
 
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = true;
             int scrollRange = -1;
+
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 if (scrollRange == -1) {
                     scrollRange = appBarLayout.getTotalScrollRange();
                 }
                 if (scrollRange + verticalOffset == 0) {
-                    collapsingToolbarLayout.setTitle("Session " + episodeDetails.getSeasonNumber() + ", Episode " + episodeDetails.getEpisodeNumber());
+                    collapsingToolbarLayout.setTitle(season.getName());
                     isShow = true;
                 } else if (isShow) {
                     collapsingToolbarLayout.setTitle(" ");
@@ -143,5 +135,28 @@ public class EpisodeFragment extends Fragment {
                 }
             }
         });
+    }
+
+    public void getEpisodeDetailsList() {
+        int seasonNumber = season.getSeasonNumber();
+        int episodeCount = season.getEpisodeCount();
+
+        for(int i = 0; i<= episodeCount; i++) {
+            Call call = RetrofitConnector.getService().getEpisodeDetails(tvId, seasonNumber, i, getString(R.string.api_key));
+            call.enqueue(new Callback<EpisodeDetails>() {
+                @Override
+                public void onResponse(Call<EpisodeDetails> call, Response<EpisodeDetails> response) {
+                       if(response.body() != null) {
+                           episodeList.add(response.body());
+                           adapter.notifyDataSetChanged();
+                       }
+                }
+
+                @Override
+                public void onFailure(Call<EpisodeDetails> call, Throwable throwable) {
+                    Log.e(getString(R.string.RETROFIT_ERROR), throwable.getMessage());
+                }
+            });
+        }
     }
 }

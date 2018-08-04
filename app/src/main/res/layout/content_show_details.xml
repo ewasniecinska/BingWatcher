@@ -13,7 +13,7 @@
         android:paddingLeft="16dp"
         android:text="@string/show_title"
         android:textSize="18sp"
-        app:layout_anchor="@+id/appBarLayout"
+        app:layout_anchor="@+id/app_bar_layout"
         app:layout_anchorGravity="left|bottom"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
@@ -24,9 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:paddingLeft="16dp"
-        android:text="@string/label_episodes"
         android:textSize="18sp"
-        app:layout_anchor="@+id/appBarLayout"
+        app:layout_anchor="@+id/app_bar_layout"
         app:layout_anchorGravity="left|bottom"
         app:layout_constraintTop_toBottomOf="@+id/show_overview"
         tools:layout_editor_absoluteX="0dp" />
@@ -39,7 +38,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text='"test"'
-        app:layout_anchor="@+id/appBarLayout"
+        app:layout_anchor="@+id/app_bar_layout"
         app:layout_anchorGravity="left|bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -103,7 +102,7 @@
         app:layout_constraintTop_toBottomOf="@+id/next_episode_card_view">
 
         <TextView
-            android:id="@+id/next_episode_name"
+            android:id="@+id/label_all_episodes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"

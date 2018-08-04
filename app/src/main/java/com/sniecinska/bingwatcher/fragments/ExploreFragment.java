@@ -18,7 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sniecinska.bingwatcher.R;
-import com.sniecinska.bingwatcher.adapters.PopularSeriesAdapter;
+import com.sniecinska.bingwatcher.adapters.SeriesListAdapter;
 import com.sniecinska.bingwatcher.api.RetrofitConnector;
 import com.sniecinska.bingwatcher.models.PopularResult;
 
@@ -111,7 +111,7 @@ public class ExploreFragment extends Fragment {
         call.enqueue(new Callback<PopularResult>() {
             @Override
             public void onResponse(Call<PopularResult> call, Response<PopularResult> response) {
-                recyclerView.setAdapter(new PopularSeriesAdapter(fragmentManager, response.body().getListOfSeries()));
+                recyclerView.setAdapter(new SeriesListAdapter(getActivity().getApplicationContext(), fragmentManager, response.body().getListOfSeries()));
             }
             @Override
             public void onFailure(Call<PopularResult> call, Throwable throwable) {

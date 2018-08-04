@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sniecinska.bingwatcher.R;
-import com.sniecinska.bingwatcher.adapters.SeasonsAdapter;
+import com.sniecinska.bingwatcher.adapters.SeasonsListAdapter;
 import com.sniecinska.bingwatcher.models.Season;
 
 import java.util.List;
@@ -33,12 +33,14 @@ public class SeasonsListFragment extends Fragment {
     GridLayoutManager gridLayoutManager;
     FragmentManager fragmentManager;
     List<Season> seasonList;
+    int tvId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             seasonList = bundle.getParcelableArrayList(getString(R.string.SEASONS));
+            tvId = bundle.getInt(getString(R.string.TV_ID));
         }
         super.onCreate(savedInstanceState);
     }
@@ -48,14 +50,27 @@ public class SeasonsListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_season_list, container, false);
         ButterKnife.bind(this, view);
 
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        initToolbar();
 
         fragmentManager = getFragmentManager();
-
         gridLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 1);
         recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.setAdapter(new SeasonsAdapter(fragmentManager, seasonList));
+        recyclerView.setAdapter(new SeasonsListAdapter(getActivity().getApplicationContext(), fragmentManager, seasonList, tvId));
 
         return view;
+    }
+
+    public void initToolbar() {
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().popBackStackImmediate();
+            }
+        });
+
     }
 }

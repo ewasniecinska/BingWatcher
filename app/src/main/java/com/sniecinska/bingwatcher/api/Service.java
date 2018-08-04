@@ -1,5 +1,6 @@
 package com.sniecinska.bingwatcher.api;
 
+import com.sniecinska.bingwatcher.models.EpisodeDetails;
 import com.sniecinska.bingwatcher.models.PopularResult;
 import com.sniecinska.bingwatcher.models.TvSeriesDetails;
 
@@ -25,4 +26,7 @@ public interface Service {
 
     @GET("tv/{tv_id}")
     Call<TvSeriesDetails> getSeriesDetails(@Path("tv_id") int tv_id, @Query("api_key") String user);
+
+    @GET("tv/{tv_id}/season/{season_number}/episode/{episode_number}")
+    Call<EpisodeDetails> getEpisodeDetails(@Path("tv_id") int tv_id, @Path("season_number") int season_number, @Path("episode_number") int episode_number, @Query("api_key") String user);
 }

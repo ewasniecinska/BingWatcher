@@ -3,10 +3,7 @@ package com.sniecinska.bingwatcher.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 /**
  * Created by ewasniecinska on 01.08.2018.
@@ -21,6 +18,9 @@ public class Season implements Parcelable {
     String poster_path;
     int season_number;
 
+    public Season() {
+
+    }
 
     protected Season(Parcel in) {
         episode_count = in.readInt();
@@ -58,22 +58,10 @@ public class Season implements Parcelable {
         }
     };
 
-    public String getAirDate() {
-        DateFormat format = new SimpleDateFormat("MMMM d yyyy", Locale.ENGLISH);
-        String airDate = format.format(air_date);
-        return airDate;
+    public Date getAirDate() {
+        return air_date;
     }
 
-    public String getAirYear() {
-        String airDate;
-        if(air_date != null) {
-            DateFormat format = new SimpleDateFormat("yyyy", Locale.ENGLISH);
-            airDate = format.format(air_date);
-        } else {
-            airDate = null;
-        }
-        return airDate;
-    }
 
     public int getEpisodeCount() {
         return episode_count;

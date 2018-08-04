@@ -6,54 +6,51 @@ import android.os.Parcelable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by ewasniecinska on 01.08.2018.
+ * Created by ewasniecinska on 02.08.2018.
  */
 
-public class Episode implements Parcelable {
+public class EpisodeDetails implements Parcelable {
     Date air_date;
+    List<Crew> crew;
     int episode_number;
-    String id;
+    List<Actor> quest_stars;
     String name;
     String overview;
+    int id;
     String production_code;
     int season_number;
-    String show_id;
     String still_path;
     float vote_average;
     int vote_count;
 
-    public Episode() {
-    }
-
-    protected Episode(Parcel in) {
+    protected EpisodeDetails(Parcel in) {
         episode_number = in.readInt();
-        id = in.readString();
+        quest_stars = in.createTypedArrayList(Actor.CREATOR);
         name = in.readString();
         overview = in.readString();
+        id = in.readInt();
         production_code = in.readString();
         season_number = in.readInt();
-        show_id = in.readString();
         still_path = in.readString();
         vote_average = in.readFloat();
         vote_count = in.readInt();
     }
 
-    public static final Creator<Episode> CREATOR = new Creator<Episode>() {
+    public static final Creator<EpisodeDetails> CREATOR = new Creator<EpisodeDetails>() {
         @Override
-        public Episode createFromParcel(Parcel in) {
-            return new Episode(in);
+        public EpisodeDetails createFromParcel(Parcel in) {
+            return new EpisodeDetails(in);
         }
 
         @Override
-        public Episode[] newArray(int size) {
-            return new Episode[size];
+        public EpisodeDetails[] newArray(int size) {
+            return new EpisodeDetails[size];
         }
     };
-
-
 
     @Override
     public int describeContents() {
@@ -63,44 +60,45 @@ public class Episode implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(episode_number);
-        parcel.writeString(id);
+        parcel.writeTypedList(quest_stars);
         parcel.writeString(name);
         parcel.writeString(overview);
+        parcel.writeInt(id);
         parcel.writeString(production_code);
         parcel.writeInt(season_number);
-        parcel.writeString(show_id);
         parcel.writeString(still_path);
         parcel.writeFloat(vote_average);
         parcel.writeInt(vote_count);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getAirDateUsFormat() {
-        DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
-        String airDate = format.format(air_date);
-        return airDate;
-    }
-
-    public Date getAirDate() {
-        return air_date;
-    }
-
-    public String getOverview() {
-        return overview;
     }
 
     public int getEpisodeNumber() {
         return episode_number;
     }
 
-    public int getSeasonNumber() {
-        return season_number;
+    public List<Crew> getCrew() {
+        return crew;
+    }
+
+    public String getAirDate() {
+        DateFormat format = new SimpleDateFormat("MMMM d yyyy", Locale.ENGLISH);
+        String airDate = format.format(air_date);
+        return airDate;
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+    public String getOverview() {
+        return overview;
     }
 
     public String getStillPath() {
         return still_path;
+    }
+
+    public int getSeasonNumber() {
+        return season_number;
     }
 }
