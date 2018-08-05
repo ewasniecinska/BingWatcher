@@ -1,5 +1,6 @@
 package com.sniecinska.bingwatcher;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -17,6 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.sniecinska.bingwatcher.fragments.ExploreFragment;
 import com.sniecinska.bingwatcher.fragments.SearchFragment;
 import com.sniecinska.bingwatcher.fragments.TrackedShowsFragment;
+import com.sniecinska.bingwatcher.utils.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +44,14 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         checkUserId();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Util.scheduleJob(getApplicationContext());
+        }
+
+
+        mFragment = null;
+        fragmentManager = getSupportFragmentManager();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -71,6 +81,10 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                 });
+
+        mFragment = new TrackedShowsFragment();
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragment_box, mFragment).commit();
     }
 
     private void checkUserId(){

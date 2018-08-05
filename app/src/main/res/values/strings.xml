@@ -58,5 +58,7 @@
     <string name="label_episodes_number">Episodes number:</string>
     <string name="series_over">Series has ended</string>
 
+    <string name="service_name">Service Name</string>
+
 
 </resources>

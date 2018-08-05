@@ -38,7 +38,6 @@ import com.sniecinska.bingwatcher.models.TvSeriesDetails;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,7 +64,6 @@ public class ShowDetailFragment extends Fragment {
     boolean TRACED_MOVIE;
 
     Snackbar snackbar;
-    Date d;
 
     @BindView(R.id.show_title)
     TextView title;

@@ -58,6 +58,7 @@ public class ExploreFragment extends Fragment {
         return view;
     }
 
+
     private void initToolbar(){
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         setHasOptionsMenu(true);

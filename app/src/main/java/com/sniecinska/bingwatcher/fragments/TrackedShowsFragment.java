@@ -40,7 +40,6 @@ public class TrackedShowsFragment extends Fragment {
     FragmentManager fragmentManager;
     private FirebaseAuth mAuth;
     ArrayList<TvSeriesDetails> seriesList;
-    Date date;
 
 
     @Override
@@ -49,21 +48,19 @@ public class TrackedShowsFragment extends Fragment {
        View view = inflater.inflate(R.layout.fragment_tracked_shows, container, false);
        ButterKnife.bind(this, view);
 
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+       ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
 
-        fragmentManager = getFragmentManager();
-        gridLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 1);
-        recyclerView.setLayoutManager(gridLayoutManager);
+       fragmentManager = getFragmentManager();
+       gridLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 1);
+       recyclerView.setLayoutManager(gridLayoutManager);
 
-
-        getDataFromDb();
+       getDataFromDb();
 
         return view;
     }
 
     private void getDataFromDb() {
         firebaseDatabase = FirebaseDatabase.getInstance();
-        //databaseReference = firebaseDatabase.getReference().child(getString(R.string.DB_CHILD_USERS));
         databaseReference = firebaseDatabase.getReference();
         final TreeMap treeMap = new TreeMap<Date, TvSeriesDetails>();
         Query peopleBloodTypeQuery = databaseReference.child("users").orderByChild("air_date");
@@ -90,6 +87,5 @@ public class TrackedShowsFragment extends Fragment {
         });
 
     }
-
 
 }
