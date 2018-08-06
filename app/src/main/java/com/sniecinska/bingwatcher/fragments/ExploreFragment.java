@@ -90,21 +90,20 @@ public class ExploreFragment extends Fragment {
         return true;
     }
 
-    public void getSavedSortByCategory(){
+    public void getSavedSortByCategory() {
         String sortMode = sharedpreferences.getString(getString(R.string.sort), "");
-        switch (sortMode) {
-            case "Top rated TV shows":
-                updateSharedPreference(getString(R.string.app_title_popular));
-                call = RetrofitConnector.getService().getPopularSeries(getString(R.string.api_key));
-                callApi(call);
-                getActivity().setTitle(getString(R.string.app_title_popular));
-                return;
-            case "Popular TV shows":
-                updateSharedPreference(getString(R.string.app_title_top_rated));
-                call = RetrofitConnector.getService().getTopRated(getString(R.string.api_key));
-                callApi(call);
-                getActivity().setTitle(getString(R.string.app_title_top_rated));
-                return;
+
+        if (sortMode.equals(getString(R.string.app_title_popular))) {
+            updateSharedPreference(getString(R.string.app_title_popular));
+            call = RetrofitConnector.getService().getPopularSeries(getString(R.string.api_key));
+            callApi(call);
+            getActivity().setTitle(getString(R.string.app_title_popular));
+
+        } else if (sortMode.equals(getString(R.string.app_title_top_rated))) {
+            updateSharedPreference(getString(R.string.app_title_top_rated));
+            call = RetrofitConnector.getService().getTopRated(getString(R.string.api_key));
+            callApi(call);
+            getActivity().setTitle(getString(R.string.app_title_top_rated));
         }
     }
 

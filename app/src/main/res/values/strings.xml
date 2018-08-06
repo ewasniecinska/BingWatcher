@@ -23,6 +23,7 @@
     <string name="DB_CHILD_USER_ID">user_id</string>
     <string name="DB_CHILD_TVSERIES">tvSeries</string>
     <string name="DB_CHILD_TVSERIES_DETAILS">tv_series_details</string>
+    <string name="DB_CHILD_AIR_DATE">air_date</string>
 
     <!-- Bundles -->
     <string name="TV_SHOW">TV_SHOW</string>
@@ -45,7 +46,7 @@
     <string name="search_hint">Title of TV series</string>
 
     <!-- widget -->
-    <string name="appwidget_text">EXAMPLE</string>
+    <string name="appwidget_text">Next 3 tv series</string>
     <string name="add_widget">Add widget</string>
 
     <!-- Other -->
@@ -59,6 +60,13 @@
     <string name="series_over">Series has ended</string>
 
     <string name="service_name">Service Name</string>
+    <string name="snackbar_series_remove"> has been removed from tracked series</string>
+    <string name="snackbar_series_added"> has been added to tracked series</string>
+    <string name="print_labes"> aires </string>
+    <string name="label_season">Season </string>
+    <string name="label_next_episode">, Episode</string>
+    <string name="label_episode_counter">Episodes: </string>
+    <string name="label_aired_date">Aired date: </string>
 
 
 </resources>

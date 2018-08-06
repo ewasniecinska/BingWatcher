@@ -44,7 +44,6 @@ public class MyService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-
         getDataFromDb();
         return Service.START_STICKY;
     }
@@ -55,11 +54,12 @@ public class MyService extends Service {
         return null;
     }
 
+
     public void getDataFromDb() {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
-        Query peopleBloodTypeQuery = databaseReference.child("users").orderByChild("air_date");
-        peopleBloodTypeQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+        Query tvSeriesQuery = databaseReference.child(getString(R.string.DB_CHILD_USERS)).orderByChild(getString(R.string.DB_CHILD_AIR_DATE));
+        tvSeriesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 seriesList = new ArrayList<>();
@@ -77,7 +77,6 @@ public class MyService extends Service {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
 
@@ -105,10 +104,9 @@ public class MyService extends Service {
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                             if (dataSnapshot.exists()) {
-                                                    String tvId = ds.child("series_id").getValue(String.class);
-                                                Log.d("TEST", "testowo");
+                                                String tvId = ds.child(getString(R.string.DB_CHILD_SERIES_ID)).getValue(String.class);
                                                 if (tvId.equals(Integer.toString(tvSeriesDetails.getId()))){
-                                                    ds.getRef().child("tv_series_details").setValue(tvSeriesDetails);
+                                                    ds.getRef().child(getString(R.string.DB_CHILD_TVSERIES_DETAILS)).setValue(tvSeriesDetails);
                                                 }
                                             }
 
@@ -130,7 +128,5 @@ public class MyService extends Service {
             });
         }
     }
-
-
 
 }

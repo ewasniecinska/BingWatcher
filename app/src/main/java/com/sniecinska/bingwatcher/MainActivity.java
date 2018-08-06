@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 import com.sniecinska.bingwatcher.fragments.ExploreFragment;
 import com.sniecinska.bingwatcher.fragments.SearchFragment;
 import com.sniecinska.bingwatcher.fragments.TrackedShowsFragment;
@@ -25,6 +26,7 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
     Fragment mFragment;
+    FirebaseDatabase firebaseDatabase;
     FragmentManager fragmentManager;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -42,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
+
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        firebaseDatabase.setPersistenceEnabled(true);
 
         checkUserId();
 

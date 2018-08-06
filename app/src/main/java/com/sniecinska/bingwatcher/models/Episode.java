@@ -3,6 +3,8 @@ package com.sniecinska.bingwatcher.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.joda.time.DateTime;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -82,6 +84,29 @@ public class Episode implements Parcelable {
         DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
         String airDate = format.format(air_date);
         return airDate;
+    }
+
+    public String getAirDay(){
+        DateTime airDate = new DateTime(air_date);
+        DateTime now = DateTime.now();
+
+        int airDayOfYear = airDate.getDayOfYear();
+        int nowDayOfYear = now.getDayOfYear();
+
+        if(airDayOfYear == nowDayOfYear -1 ){
+            return "Yesterday";
+        } else if(airDayOfYear == nowDayOfYear){
+            return "Today";
+        } else if(airDayOfYear == nowDayOfYear + 1){
+            return "Tomorrow";
+        } else if(airDayOfYear == nowDayOfYear + 2){
+            return "After tomorrow";
+        } else if(airDayOfYear >= nowDayOfYear + 3) {
+            int difference = airDayOfYear - nowDayOfYear;
+            return "In " + difference + " days";
+        }
+
+        return "";
     }
 
     public Date getAirDate() {

@@ -83,9 +83,9 @@ public class TrackedShowsListAdapter extends RecyclerView.Adapter<TrackedShowsLi
         if(list.get(position).getProductionStatus()){
             Episode nextEpisode = list.get(position).getNextEpisode();
             if(nextEpisode != null) {
-                recipeHolder.episodeNumber.setText("Season " + nextEpisode.getSeasonNumber() + ", Episode " + nextEpisode.getEpisodeNumber());
+                recipeHolder.episodeNumber.setText(context.getString(R.string.label_season) + nextEpisode.getSeasonNumber() + context.getString(R.string.label_next_episode + nextEpisode.getEpisodeNumber()));
 
-                recipeHolder.nextEpisodeDay.setText(R.string.Today);
+                recipeHolder.nextEpisodeDay.setText(list.get(position).getNextEpisode().getAirDay());
                 recipeHolder.nextEpisodeDate.setText(nextEpisode.getAirDateUsFormat());
                 recipeHolder.nextEpisodeTime.setText(list.get(position).getListOfNetworks().get(0).getName());
             } else {

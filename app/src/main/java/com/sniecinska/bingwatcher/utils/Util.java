@@ -17,8 +17,8 @@ public class Util {
     public static void scheduleJob(Context context) {
         ComponentName serviceComponent = new ComponentName(context, TestJobService.class);
         JobInfo.Builder builder = new JobInfo.Builder(0, serviceComponent);
-        builder.setMinimumLatency(18 * 1000); // wait at least
-        builder.setOverrideDeadline(20 * 1000); // maximum delay
+        builder.setMinimumLatency(180 * 1000); // wait at least
+        builder.setOverrideDeadline(200 * 1000); // maximum delay
         builder.setRequiresCharging(false);
         JobScheduler jobScheduler = context.getSystemService(JobScheduler.class);
         jobScheduler.schedule(builder.build());

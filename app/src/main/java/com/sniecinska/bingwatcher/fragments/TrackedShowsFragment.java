@@ -1,5 +1,7 @@
 package com.sniecinska.bingwatcher.fragments;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -11,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RemoteViews;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,10 +26,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.sniecinska.bingwatcher.R;
 import com.sniecinska.bingwatcher.adapters.TrackedShowsListAdapter;
 import com.sniecinska.bingwatcher.models.TvSeriesDetails;
+import com.sniecinska.bingwatcher.widget.AppWidget;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,9 +64,8 @@ public class TrackedShowsFragment extends Fragment {
     private void getDataFromDb() {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
-        final TreeMap treeMap = new TreeMap<Date, TvSeriesDetails>();
-        Query peopleBloodTypeQuery = databaseReference.child("users").orderByChild("air_date");
-        peopleBloodTypeQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+        Query tvSeriesQuery = databaseReference.child(getString(R.string.DB_CHILD_USERS)).orderByChild(getString(R.string.DB_CHILD_AIR_DATE));
+        tvSeriesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 seriesList = new ArrayList<>();
@@ -77,6 +78,7 @@ public class TrackedShowsFragment extends Fragment {
                         seriesList.add(tvSeries);
                     }
                 }
+                updateWidget();
                 recyclerView.setAdapter(new TrackedShowsListAdapter(getActivity().getApplicationContext(), fragmentManager, seriesList));
             }
 
@@ -88,4 +90,26 @@ public class TrackedShowsFragment extends Fragment {
 
     }
 
+    public void updateWidget() {
+
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(getActivity().getApplicationContext());
+        RemoteViews remoteViews = new RemoteViews(getActivity().getApplicationContext().getPackageName(), R.layout.app_widget);
+        ComponentName thisWidget = new ComponentName(getActivity().getApplicationContext(), AppWidget.class);
+        remoteViews.setTextViewText(R.id.widget_list, getThreeNextShows());
+        appWidgetManager.updateAppWidget(thisWidget, remoteViews);
+    }
+
+    public String getThreeNextShows(){
+        String nextTvShows = "";
+        StringBuilder sB = new StringBuilder(nextTvShows);
+
+
+        for(int i = 0; i < seriesList.size(); i++){
+            if(seriesList.get(i).getNextEpisode() != null) {
+                sB.append("- " + seriesList.get(i).getName() + getString(R.string.print_labes) + seriesList.get(i).getNextEpisode().getAirDay() + System.lineSeparator());
+            }
+        }
+
+        return sB.toString();
+    }
 }

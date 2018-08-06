@@ -70,7 +70,7 @@ public class SeasonsListAdapter extends RecyclerView.Adapter<SeasonsListAdapter.
 
         recipeHolder.title.setText(title);
 
-        recipeHolder.episodesNumber.setText("Episodes: " + list.get(position).getEpisodeCount());
+        recipeHolder.episodesNumber.setText(context.getString(R.string.label_episode_counter) + list.get(position).getEpisodeCount());
 
         Picasso.get()
                 .load(context.getString(R.string.poster_based_url) + list.get(position).getPosterPath())

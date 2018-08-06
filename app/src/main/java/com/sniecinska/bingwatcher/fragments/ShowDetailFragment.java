@@ -33,6 +33,7 @@ import com.sniecinska.bingwatcher.R;
 import com.sniecinska.bingwatcher.api.RetrofitConnector;
 import com.sniecinska.bingwatcher.models.DatabaseModel;
 import com.sniecinska.bingwatcher.models.Episode;
+import com.sniecinska.bingwatcher.models.ExternalApiResult;
 import com.sniecinska.bingwatcher.models.TvSeries;
 import com.sniecinska.bingwatcher.models.TvSeriesDetails;
 import com.squareup.picasso.Picasso;
@@ -64,6 +65,7 @@ public class ShowDetailFragment extends Fragment {
     boolean TRACED_MOVIE;
 
     Snackbar snackbar;
+    int tvDbId;
 
     @BindView(R.id.show_title)
     TextView title;
@@ -105,6 +107,7 @@ public class ShowDetailFragment extends Fragment {
 
         TRACED_MOVIE = false;
 
+
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             tvSeries = bundle.getParcelable(getString(R.string.TV_SHOW));
@@ -113,9 +116,11 @@ public class ShowDetailFragment extends Fragment {
                 updateUI();
                 initFirebaseAnalytics();
                 initFirebaseDatabase();
+                getExternalId();
             } else {
                 getSeriesDetailsThenUpdateUi();
             }
+
         }
 
         return view;
@@ -185,6 +190,8 @@ public class ShowDetailFragment extends Fragment {
                 updateUI();
                 initFirebaseAnalytics();
                 initFirebaseDatabase();
+                getExternalId();
+
             }
 
             @Override
@@ -246,12 +253,12 @@ public class ShowDetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(TRACED_MOVIE){
-                    showSnackBar(tvSeriesDetails.getName() + " has been removed from tracked series");
+                    showSnackBar(tvSeriesDetails.getName() + getString(R.string.snackbar_series_remove));
                     addToTrackedButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_tv));
                     deleteDataFromDatabase();
                     TRACED_MOVIE = false;
                 } else {
-                    showSnackBar(tvSeriesDetails.getName() + " has been added to tracked series");
+                    showSnackBar(tvSeriesDetails.getName() + getString(R.string.snackbar_series_added));
                     addToTrackedButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_tv_off));
                     Episode nextEpisode = tvSeriesDetails.getNextEpisode();
                     if(nextEpisode == null){
@@ -380,6 +387,23 @@ public class ShowDetailFragment extends Fragment {
                     }
 
                 });
+    }
+
+    public void getExternalId(){
+        Call call = RetrofitConnector.getService().getExternalID(tvSeriesDetails.getId(), getString(R.string.api_key));
+
+        call.enqueue(new Callback<ExternalApiResult>() {
+            @Override
+            public void onResponse(Call<ExternalApiResult> call, Response<ExternalApiResult> response) {
+                tvDbId = response.body().getTvdbId();
+                Log.d("TIME", String.valueOf(tvDbId));
+            }
+
+            @Override
+            public void onFailure(Call<ExternalApiResult> call, Throwable throwable) {
+                Log.e(getString(R.string.RETROFIT_ERROR), throwable.getMessage());
+            }
+        });
     }
 
     public void showSnackBar(String meassage) {
