@@ -63,7 +63,7 @@ public class EpisodesListAdapter extends RecyclerView.Adapter<EpisodesListAdapte
 
     @Override
     public EpisodesListAdapter.RecipeHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_seasons_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_episodes_list, parent, false);
         return new RecipeHolder(view);
 
     }

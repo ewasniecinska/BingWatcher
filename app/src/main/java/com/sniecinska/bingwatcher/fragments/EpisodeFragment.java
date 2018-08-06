@@ -49,6 +49,8 @@ public class EpisodeFragment extends Fragment {
     TextView airDate;
     @BindView(R.id.episode_number)
     TextView episodeNumberView;
+    @BindView(R.id.season_number)
+    TextView seasonNumberView;
     @BindView(R.id.divider)
     ImageView divider;
 
@@ -60,9 +62,9 @@ public class EpisodeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            tvId = bundle.getInt("TV_ID");
-            seasonNumber = bundle.getInt("SEASON_NUMBER");
-            episodeNumber = bundle.getInt("EPISODE_NUMBER");
+            tvId = bundle.getInt(getString(R.string.TV_ID));
+            seasonNumber = bundle.getInt(getString(R.string.SEASON_NUMBER));
+            episodeNumber = bundle.getInt(getString(R.string.SEASON_NUMBER));
         }
 
         super.onCreate(savedInstanceState);
@@ -106,8 +108,9 @@ public class EpisodeFragment extends Fragment {
 
         overview.setText(episodeDetails.getOverview());
         title.setText(episodeDetails.getName());
-        airDate.setText("Air date: " + episodeDetails.getAirDate());
-        episodeNumberView.setText("Session " + episodeDetails.getSeasonNumber() + ", Episode " + episodeDetails.getEpisodeNumber());
+        airDate.setText(episodeDetails.getAirDate());
+        seasonNumberView.setText(Integer.toString(episodeDetails.getSeasonNumber()));
+        episodeNumberView.setText(Integer.toString(episodeDetails.getEpisodeNumber()));
     }
 
     private void initToolbar() {

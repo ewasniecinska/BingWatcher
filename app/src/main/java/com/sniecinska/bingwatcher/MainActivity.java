@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        firebaseDatabase.setPersistenceEnabled(true);
+        firebaseDatabase.setPersistenceEnabled(false);
 
         checkUserId();
 

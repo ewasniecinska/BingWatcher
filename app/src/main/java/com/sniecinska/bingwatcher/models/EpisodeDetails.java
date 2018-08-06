@@ -80,7 +80,7 @@ public class EpisodeDetails implements Parcelable {
     }
 
     public String getAirDate() {
-        DateFormat format = new SimpleDateFormat("MMMM d yyyy", Locale.ENGLISH);
+        DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
         String airDate = format.format(air_date);
         return airDate;
     }

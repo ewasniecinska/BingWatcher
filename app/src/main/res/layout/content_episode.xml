@@ -12,6 +12,7 @@
         android:layout_marginTop="16dp"
         android:paddingLeft="16dp"
         android:text="@string/show_title"
+        android:textColor="@color/primary_text"
         android:textSize="18sp"
         app:layout_anchor="@+id/app_bar_layout"
         app:layout_anchorGravity="left|bottom"
@@ -22,35 +23,84 @@
         android:id="@+id/episode_air_date"
         android:layout_width="0dp"
         android:layout_height="19dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
-        android:text='"test"'
         android:textColor="@color/secondary_text"
         android:textSize="14sp"
         app:layout_anchor="@+id/app_bar_layout"
         app:layout_anchorGravity="left|bottom"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/episode_air_date_label"
+        app:layout_constraintTop_toBottomOf="@+id/episode_title" />
+
+    <TextView
+        android:id="@+id/episode_air_date_label"
+        android:layout_width="wrap_content"
+        android:layout_height="19dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/label_aired_date"
+        android:textColor="@color/primary_text"
+        android:textSize="14sp"
+        app:layout_anchor="@+id/app_bar_layout"
+        app:layout_anchorGravity="left|bottom"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/episode_title" />
+
+    <TextView
+        android:id="@+id/season_number"
+        android:layout_width="0dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:text="0"
+        android:textColor="@color/primary_text"
+        android:textSize="14sp"
+        app:layout_anchor="@+id/app_bar_layout"
+        app:layout_anchorGravity="left|bottom"
+        app:layout_constraintStart_toEndOf="@+id/season_number_label"
+        app:layout_constraintTop_toBottomOf="@+id/episode_air_date" />
 
     <TextView
         android:id="@+id/episode_number"
         android:layout_width="0dp"
         android:layout_height="19dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
-        android:text='"test"'
-        android:textColor="@color/secondary_text"
+        android:text="0"
+        android:textColor="@color/primary_text"
         android:textSize="14sp"
         app:layout_anchor="@+id/app_bar_layout"
         app:layout_anchorGravity="left|bottom"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/episode_number_label"
         app:layout_constraintTop_toBottomOf="@+id/episode_air_date" />
+
+    <TextView
+        android:id="@+id/season_number_label"
+        android:layout_width="wrap_content"
+        android:layout_height="19dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/label_season"
+        android:textColor="@color/primary_text"
+        android:textSize="14sp"
+        app:layout_anchor="@+id/app_bar_layout"
+        app:layout_anchorGravity="left|bottom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/episode_air_date_label" />
+
+    <TextView
+        android:id="@+id/episode_number_label"
+        android:layout_width="wrap_content"
+        android:layout_height="19dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/label_next_episode"
+        android:textColor="@color/primary_text"
+        android:textSize="14sp"
+        app:layout_anchor="@+id/app_bar_layout"
+        app:layout_anchorGravity="left|bottom"
+        app:layout_constraintStart_toEndOf="@+id/season_number"
+        app:layout_constraintTop_toBottomOf="@+id/episode_air_date_label" />
 
     <ImageView
         android:id="@+id/divider"
@@ -70,6 +120,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:textColor="@color/secondary_text"
         app:layout_anchor="@+id/app_bar_layout"
         app:layout_anchorGravity="left|bottom"
         app:layout_constraintEnd_toEndOf="parent"

@@ -45,6 +45,7 @@ public class SeriesListAdapter extends RecyclerView.Adapter<SeriesListAdapter.Re
         @BindView(R.id.card_view) CardView cardView;
         @BindView(R.id.poster) ImageView poster;
         @BindView(R.id.vote_averge) RatingBar ratingBar;
+        @BindView(R.id.year) TextView year;
 
         public RecipeHolder(View v) {
             super(v);
@@ -66,6 +67,8 @@ public class SeriesListAdapter extends RecyclerView.Adapter<SeriesListAdapter.Re
         recipeHolder.title.setText(title);
 
         recipeHolder.ratingBar.setRating(list.get(position).getVoteAverage()/2);
+
+        recipeHolder.year.setText(list.get(position).getFirstAirYear());
 
         Picasso.get()
                 .load(context.getString(R.string.poster_based_url) + list.get(position).getPosterPath())
