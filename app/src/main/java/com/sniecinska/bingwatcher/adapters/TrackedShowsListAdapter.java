@@ -47,14 +47,21 @@ public class TrackedShowsListAdapter extends RecyclerView.Adapter<TrackedShowsLi
         CardView cardView;
         @BindView(R.id.poster)
         ImageView poster;
-        @BindView(R.id.episodes_number)
+        @BindView(R.id.episode_number)
         TextView episodeNumber;
+        @BindView(R.id.season_number)
+        TextView seasonNumber;
         @BindView(R.id.next_episode_day)
         TextView nextEpisodeDay;
         @BindView(R.id.next_episode_date)
         TextView nextEpisodeDate;
         @BindView(R.id.next_episode_time)
         TextView nextEpisodeTime;
+        @BindView(R.id.season_number_label)
+        TextView seasonNumberLabel;
+        @BindView(R.id.episode_number_label)
+        TextView episodeNumberLabel;
+
 
         public RecipeHolder(View v) {
             super(v);
@@ -83,19 +90,25 @@ public class TrackedShowsListAdapter extends RecyclerView.Adapter<TrackedShowsLi
         if(list.get(position).getProductionStatus()){
             Episode nextEpisode = list.get(position).getNextEpisode();
             if(nextEpisode != null) {
-                recipeHolder.episodeNumber.setText(context.getString(R.string.label_season) + nextEpisode.getSeasonNumber() + context.getString(R.string.label_next_episode + nextEpisode.getEpisodeNumber()));
-
+                recipeHolder.seasonNumber.setText(Integer.toString(nextEpisode.getSeasonNumber()));
+                recipeHolder.episodeNumber.setText(Integer.toString(nextEpisode.getEpisodeNumber()));
                 recipeHolder.nextEpisodeDay.setText(list.get(position).getNextEpisode().getAirDay());
                 recipeHolder.nextEpisodeDate.setText(nextEpisode.getAirDateUsFormat());
                 recipeHolder.nextEpisodeTime.setText(list.get(position).getListOfNetworks().get(0).getName());
             } else {
-                recipeHolder.episodeNumber.setText(R.string.NO_DATA_YET);
+                recipeHolder.seasonNumberLabel.setText(R.string.NO_DATA_YET);
+                recipeHolder.episodeNumber.setVisibility(View.GONE);
+                recipeHolder.episodeNumberLabel.setVisibility(View.GONE);
+                recipeHolder.seasonNumber.setVisibility(View.GONE);
                 recipeHolder.nextEpisodeDay.setText("");
                 recipeHolder.nextEpisodeDate.setText(R.string.NO_DATE_YET);
                 recipeHolder.nextEpisodeTime.setText("");
             }
         } else {
-            recipeHolder.episodeNumber.setText(R.string.series_over);
+            recipeHolder.seasonNumber.setVisibility(View.GONE);
+            recipeHolder.episodeNumber.setVisibility(View.GONE);
+            recipeHolder.episodeNumberLabel.setVisibility(View.GONE);
+            recipeHolder.seasonNumberLabel.setText(R.string.NO_DATA);
             recipeHolder.nextEpisodeDay.setText("");
             recipeHolder.nextEpisodeDate.setText("");
             recipeHolder.nextEpisodeTime.setText("");

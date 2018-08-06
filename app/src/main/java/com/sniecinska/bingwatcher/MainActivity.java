@@ -99,9 +99,9 @@ public class MainActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-                    Log.d("DB_TEST", "onAuthStateChanged:signed_in:" + user.getUid());
+                    Log.d(getString(R.string.AUTH), "onAuthStateChanged:signed_in:" + user.getUid());
                } else {
-                    Log.d("DB_TEST", "onAuthStateChanged:signed_out");
+                    Log.d(getString(R.string.AUTH), "onAuthStateChanged:signed_out");
                 }
 
             }
@@ -111,9 +111,9 @@ public class MainActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d("DB_TEST", "OnComplete : " + task.isSuccessful());
+                        Log.d(getString(R.string.AUTH), "OnComplete : " + task.isSuccessful());
                         if (!task.isSuccessful()) {
-                            Log.w("DB_TEST", "Failed : ", task.getException());
+                            Log.w(getString(R.string.AUTH), "Failed : ", task.getException());
                         }
                     }
                 });

@@ -74,7 +74,7 @@ public class EpisodesListAdapter extends RecyclerView.Adapter<EpisodesListAdapte
         RecipeHolder recipeHolder = holder;
 
         recipeHolder.title.setText(list.get(position).getName());
-        recipeHolder.episodesNumber.setText(context.getString(R.string.label_aired_date) + list.get(position).getAirDate());
+        recipeHolder.episodesNumber.setText(list.get(position).getAirDate());
 
         Picasso.get()
                 .load(context.getString(R.string.poster_based_url) + list.get(position).getStillPath())

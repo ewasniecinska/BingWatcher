@@ -106,7 +106,7 @@ public class TrackedShowsFragment extends Fragment {
 
         for(int i = 0; i < seriesList.size(); i++){
             if(seriesList.get(i).getNextEpisode() != null) {
-                sB.append("- " + seriesList.get(i).getName() + getString(R.string.print_labes) + seriesList.get(i).getNextEpisode().getAirDay() + System.lineSeparator());
+                sB.append("- " + seriesList.get(i).getName() + " " + getString(R.string.print_labes) + " " + seriesList.get(i).getNextEpisode().getAirDay() + System.lineSeparator());
             }
         }
 

@@ -85,12 +85,51 @@
         </TextView>
 
         <TextView
-            android:id="@+id/episodes_number"
-            android:layout_width="188dp"
+            android:id="@+id/episode_number_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:text="@string/label_next_episode"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/season_number"
+            app:layout_constraintTop_toBottomOf="@+id/title">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/episode_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:text="00"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/episode_number_label"
+            app:layout_constraintTop_toBottomOf="@+id/title">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/season_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:text="00"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/season_number_label"
+            app:layout_constraintTop_toBottomOf="@+id/title">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/season_number_label"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
-            android:text="TEST"
+            android:text="@string/label_season"
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/poster"
             app:layout_constraintTop_toBottomOf="@+id/title">

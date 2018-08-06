@@ -89,8 +89,8 @@ public class SeasonsDetailFragment extends Fragment {
 
         overview.setText(season.getOverview());
         title.setText(season.getName());
-        airDate.setText(getString(R.string.label_air_date) + season.getAirDateUsFormat());
-        episodeNumber.setText(getString(R.string.label_episodes_number) + season.getEpisodeCount());
+        airDate.setText(season.getAirDateUsFormat());
+        episodeNumber.setText(Integer.toString(season.getEpisodeCount()));
 
         fragmentManager = getFragmentManager();
         gridLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 1);

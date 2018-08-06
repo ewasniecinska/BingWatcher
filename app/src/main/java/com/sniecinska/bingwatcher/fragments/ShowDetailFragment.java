@@ -85,6 +85,8 @@ public class ShowDetailFragment extends Fragment {
     TextView nextEpisodeName;
     @BindView(R.id.next_episode_number)
     TextView nextEpisodeNumber;
+    @BindView(R.id.next_season_number)
+    TextView nextSeasonNumber;
     @BindView(R.id.next_episode_date)
     TextView nextEpisodeDate;
     @BindView(R.id.toolbar)
@@ -230,7 +232,8 @@ public class ShowDetailFragment extends Fragment {
         episode = tvSeriesDetails.getLastEpisode();
 
         nextEpisodeName.setText(episode.getName());
-        nextEpisodeNumber.setText("Session " + episode.getSeasonNumber() + ", Episode " + episode.getEpisodeNumber());
+        nextSeasonNumber.setText(Integer.toString(episode.getSeasonNumber()));
+        nextEpisodeNumber.setText(Integer.toString(episode.getEpisodeNumber()));
         nextEpisodeDate.setVisibility(View.GONE);
         setEpisodeButton(episode);
     }
@@ -240,7 +243,8 @@ public class ShowDetailFragment extends Fragment {
         episode = tvSeriesDetails.getNextEpisode();
 
         nextEpisodeName.setText(episode.getName());
-        nextEpisodeNumber.setText("Session " + episode.getSeasonNumber() + ", Episode " + episode.getEpisodeNumber());
+        nextSeasonNumber.setText(Integer.toString(episode.getSeasonNumber()));
+        nextEpisodeNumber.setText(Integer.toString(episode.getEpisodeNumber()));
         nextEpisodeDate.setText(episode.getAirDateUsFormat());
         setEpisodeButton(episode);
     }
@@ -396,7 +400,6 @@ public class ShowDetailFragment extends Fragment {
             @Override
             public void onResponse(Call<ExternalApiResult> call, Response<ExternalApiResult> response) {
                 tvDbId = response.body().getTvdbId();
-                Log.d("TIME", String.valueOf(tvDbId));
             }
 
             @Override
