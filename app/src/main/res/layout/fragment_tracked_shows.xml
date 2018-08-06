@@ -33,4 +33,9 @@
         tools:layout_editor_absoluteX="8dp">
 
     </android.support.v7.widget.RecyclerView>
+
+
+    <include
+        layout="@layout/state_no_data"/>
+
 </android.support.design.widget.CoordinatorLayout>

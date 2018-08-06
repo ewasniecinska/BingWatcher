@@ -4,6 +4,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +37,8 @@ import butterknife.ButterKnife;
 public class TrackedShowsFragment extends Fragment {
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
+    @BindView(R.id.empty_view)
+    ConstraintLayout emptyView;
     GridLayoutManager gridLayoutManager;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
@@ -79,6 +82,10 @@ public class TrackedShowsFragment extends Fragment {
                     }
                 }
                 updateWidget();
+                if (seriesList.isEmpty()) {
+                    recyclerView.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.VISIBLE);
+                }
                 recyclerView.setAdapter(new TrackedShowsListAdapter(getActivity().getApplicationContext(), fragmentManager, seriesList));
             }
 

@@ -257,12 +257,12 @@ public class ShowDetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(TRACED_MOVIE){
-                    showSnackBar(tvSeriesDetails.getName() + getString(R.string.snackbar_series_remove));
+                    showSnackBar(tvSeriesDetails.getName() + " "+ getString(R.string.snackbar_series_remove));
                     addToTrackedButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_tv));
                     deleteDataFromDatabase();
                     TRACED_MOVIE = false;
                 } else {
-                    showSnackBar(tvSeriesDetails.getName() + getString(R.string.snackbar_series_added));
+                    showSnackBar(tvSeriesDetails.getName() + " " + getString(R.string.snackbar_series_added));
                     addToTrackedButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_tv_off));
                     Episode nextEpisode = tvSeriesDetails.getNextEpisode();
                     if(nextEpisode == null){
