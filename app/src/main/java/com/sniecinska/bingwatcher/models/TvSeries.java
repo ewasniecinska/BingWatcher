@@ -3,8 +3,6 @@ package com.sniecinska.bingwatcher.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.joda.time.DateTime;
-
 import java.util.List;
 
 /**
@@ -127,13 +125,11 @@ public class TvSeries implements Parcelable {
     }
 
     public String getFirstAirYear(){
-
-        DateTime date = DateTime.parse(first_air_date);
-
-        if(first_air_date != null){
-            return String.valueOf(date.getYear());
+        if(first_air_date.length() > 4){
+            String airDate = first_air_date.substring(0, 4);
+            return airDate;
         } else {
-            return " ";
+            return null;
         }
     }
 

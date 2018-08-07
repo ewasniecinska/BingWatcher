@@ -5,7 +5,7 @@
     android:id="@+id/empty_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:visibility="visible">
+    android:visibility="gone">
 
     <ImageView
         android:layout_width="0dp"
@@ -15,11 +15,11 @@
         android:adjustViewBounds="false"
         android:gravity="center"
         android:src="@drawable/ic_sad_tv"
-        android:text="NO DATA"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="32dp" />
+        tools:layout_editor_absoluteY="32dp"
+        android:contentDescription="@string/nothing_to_track"/>
 
     <TextView
         android:id="@+id/textView"
@@ -28,7 +28,7 @@
         android:layout_marginBottom="168dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:text="There's nothing to track"
+        android:text="@string/nothing_to_track"
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"

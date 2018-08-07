@@ -8,10 +8,10 @@ import android.os.Parcelable;
  */
 
 public class TvNetwork implements Parcelable {
-    String name;
-    int id;
-    String logo_path;
-    String origin_country;
+    public String name;
+    public int id;
+    public String logo_path;
+    public String origin_country;
 
     public TvNetwork() {
     }
@@ -51,5 +51,17 @@ public class TvNetwork implements Parcelable {
 
     public String getName() {
         return name;
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public String getLogoPath(){
+        return logo_path;
+    }
+
+    public String getOriginCountry(){
+        return origin_country;
     }
 }

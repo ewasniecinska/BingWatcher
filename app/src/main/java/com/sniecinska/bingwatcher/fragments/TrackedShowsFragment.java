@@ -1,5 +1,6 @@
 package com.sniecinska.bingwatcher.fragments;
 
+import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.os.Bundle;
@@ -45,6 +46,7 @@ public class TrackedShowsFragment extends Fragment {
     FragmentManager fragmentManager;
     FirebaseAuth mAuth;
     ArrayList<TvSeriesDetails> seriesList;
+    Activity activity;
 
 
     @Override
@@ -61,7 +63,7 @@ public class TrackedShowsFragment extends Fragment {
 
        getDataFromDb();
 
-        return view;
+       return view;
     }
 
     private void initToolbar() {
@@ -126,4 +128,5 @@ public class TrackedShowsFragment extends Fragment {
 
         return sB.toString();
     }
+
 }

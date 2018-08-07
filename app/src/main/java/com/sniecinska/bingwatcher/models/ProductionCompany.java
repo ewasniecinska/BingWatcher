@@ -5,8 +5,28 @@ package com.sniecinska.bingwatcher.models;
  */
 
 public class ProductionCompany {
-    String id;
-    String logo_path;
-    String name;
-    String origin_country;
+    public String id;
+    public String logo_path;
+    public String name;
+    public String origin_country;
+
+    public ProductionCompany(){
+
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getLogoPath(){
+        return logo_path;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getOrginCountry() {
+        return origin_country;
+    }
 }

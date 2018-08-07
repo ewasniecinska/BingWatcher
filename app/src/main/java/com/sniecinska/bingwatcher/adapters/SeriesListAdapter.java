@@ -68,7 +68,10 @@ public class SeriesListAdapter extends RecyclerView.Adapter<SeriesListAdapter.Re
 
         recipeHolder.ratingBar.setRating(list.get(position).getVoteAverage()/2);
 
-        recipeHolder.year.setText(list.get(position).getFirstAirYear());
+
+        if(list.get(position).getFirstAirYear() != null){
+            recipeHolder.year.setText(list.get(position).getFirstAirYear());
+        }
 
         Picasso.get()
                 .load(context.getString(R.string.poster_based_url) + list.get(position).getPosterPath())

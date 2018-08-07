@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.sniecinska.bingwatcher.fragments.ExploreFragment;
 import com.sniecinska.bingwatcher.fragments.SearchFragment;
 import com.sniecinska.bingwatcher.fragments.TrackedShowsFragment;
+import com.sniecinska.bingwatcher.utils.InternetConnection;
 import com.sniecinska.bingwatcher.utils.Util;
 
 import butterknife.BindView;
@@ -45,8 +46,10 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        // check internet connection
+        new InternetConnection(getApplicationContext()).execute();
+
         firebaseDatabase = FirebaseDatabase.getInstance();
-        firebaseDatabase.setPersistenceEnabled(false);
 
         checkUserId();
 

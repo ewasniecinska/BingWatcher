@@ -87,26 +87,31 @@ public class Episode implements Parcelable {
     }
 
     public String getAirDay(){
-        DateTime airDate = new DateTime(air_date);
-        DateTime now = DateTime.now();
+        if(air_date != null) {
+            DateTime airDate = new DateTime(air_date);
+            DateTime now = DateTime.now();
 
-        int airDayOfYear = airDate.getDayOfYear();
-        int nowDayOfYear = now.getDayOfYear();
+            int airDayOfYear = airDate.getDayOfYear();
+            int nowDayOfYear = now.getDayOfYear();
 
-        if(airDayOfYear == nowDayOfYear -1 ){
-            return "Yesterday";
-        } else if(airDayOfYear == nowDayOfYear){
-            return "Today";
-        } else if(airDayOfYear == nowDayOfYear + 1){
-            return "Tomorrow";
-        } else if(airDayOfYear == nowDayOfYear + 2){
-            return "After tomorrow";
-        } else if(airDayOfYear >= nowDayOfYear + 3) {
-            int difference = airDayOfYear - nowDayOfYear;
-            return "In " + difference + " days";
+            if (airDayOfYear == nowDayOfYear - 1) {
+                return "Yesterday";
+            } else if (airDayOfYear == nowDayOfYear) {
+                return "Today";
+            } else if (airDayOfYear == nowDayOfYear + 1) {
+                return "Tomorrow";
+            } else if (airDayOfYear == nowDayOfYear + 2) {
+                return "After tomorrow";
+            } else if (airDayOfYear >= nowDayOfYear + 3) {
+                int difference = airDayOfYear - nowDayOfYear;
+                return "In " + difference + " days";
+            }
+
+            return " ";
+        } else {
+            return " ";
         }
 
-        return "";
     }
 
     public Date getAirDate() {

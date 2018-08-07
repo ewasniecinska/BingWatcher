@@ -10,7 +10,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:paddingLeft="16dp"
+        android:paddingStart="16dp"
         android:text="@string/show_title"
         android:textColor="@color/primary_text"
         android:textSize="18sp"
@@ -52,7 +52,7 @@
         android:layout_height="19dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
-        android:text="0"
+        android:text="@string/test_number"
         android:textColor="@color/primary_text"
         android:textSize="14sp"
         app:layout_anchor="@+id/app_bar_layout"
@@ -66,7 +66,7 @@
         android:layout_height="19dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
-        android:text="0"
+        android:text="@string/test_number"
         android:textColor="@color/primary_text"
         android:textSize="14sp"
         app:layout_anchor="@+id/app_bar_layout"
@@ -111,7 +111,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/episode_number"
-        app:srcCompat="@color/divider" />
+        app:srcCompat="@color/divider"
+        android:contentDescription="@string/view_divider"/>
 
     <TextView
         android:id="@+id/episode_overview"

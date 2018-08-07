@@ -32,7 +32,8 @@
                 android:src="@color/cardview_dark_background"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:layout_editor_absoluteY="0dp" />
+                tools:layout_editor_absoluteY="0dp"
+                android:contentDescription="@string/tv_episode_image"/>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"

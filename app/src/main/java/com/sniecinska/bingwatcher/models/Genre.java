@@ -5,6 +5,18 @@ package com.sniecinska.bingwatcher.models;
  */
 
 public class Genre {
-    int id;
-    String name;
+    public int id;
+    public String name;
+
+    public Genre(){
+
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public String getName(){
+        return name;
+    }
 }

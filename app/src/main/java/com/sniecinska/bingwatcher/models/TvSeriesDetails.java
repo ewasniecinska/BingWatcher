@@ -10,34 +10,34 @@ import java.util.List;
  */
 
 public class TvSeriesDetails implements Parcelable{
-    String backdrop_path;
-    List<SeriesCreator> created_by;
-    List<String> episode_run_time;
-    String first_air_date;
-    List<Genre> genres;
-    String homepage;
-    int id;
-    boolean in_production;
-    List<String> languages;
-    String last_air_date;
-    Episode last_episode_to_air;
-    String name;
-    Episode next_episode_to_air;
-    List<TvNetwork> networks;
-    int number_of_episodes;
-    int number_of_seasons;
-    List<String> origin_country;
-    String original_language;
-    String original_name;
-    String overview;
-    String popularity;
-    String poster_path;
-    List<ProductionCompany> production_companies;
-    List<Season> seasons;
-    String status;
-    String type;
-    float vote_average;
-    int vote_count;
+    public String backdrop_path;
+    public List<SeriesCreator> created_by;
+    public List<String> episode_run_time;
+    public String first_air_date;
+    public List<Genre> genres;
+    public String homepage;
+    public int id;
+    public boolean in_production;
+    public List<String> languages;
+    public String last_air_date;
+    public Episode last_episode_to_air;
+    public String name;
+    public Episode next_episode_to_air;
+    public List<TvNetwork> networks;
+    public int number_of_episodes;
+    public int number_of_seasons;
+    public List<String> origin_country;
+    public String original_language;
+    public String original_name;
+    public String overview;
+    public String popularity;
+    public String poster_path;
+    public List<ProductionCompany> production_companies;
+    public List<Season> seasons;
+    public String status;
+    public String type;
+    public float vote_average;
+    public int vote_count;
 
     public TvSeriesDetails(){
     }
@@ -80,6 +80,39 @@ public class TvSeriesDetails implements Parcelable{
             return new TvSeriesDetails[size];
         }
     };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(backdrop_path);
+        parcel.writeStringList(episode_run_time);
+        parcel.writeString(first_air_date);
+        parcel.writeString(homepage);
+        parcel.writeInt(id);
+        parcel.writeByte((byte) (in_production ? 1 : 0));
+        parcel.writeStringList(languages);
+        parcel.writeString(last_air_date);
+        parcel.writeParcelable(last_episode_to_air, i);
+        parcel.writeString(name);
+        parcel.writeParcelable(next_episode_to_air, i);
+        parcel.writeInt(number_of_episodes);
+        parcel.writeInt(number_of_seasons);
+        parcel.writeStringList(origin_country);
+        parcel.writeString(original_language);
+        parcel.writeString(original_name);
+        parcel.writeString(overview);
+        parcel.writeString(popularity);
+        parcel.writeString(poster_path);
+        parcel.writeTypedList(seasons);
+        parcel.writeString(status);
+        parcel.writeString(type);
+        parcel.writeFloat(vote_average);
+        parcel.writeInt(vote_count);
+    }
 
     public List<TvNetwork> getListOfNetworks() {
         return networks;
@@ -157,37 +190,12 @@ public class TvSeriesDetails implements Parcelable{
         return overview;
     }
 
-
-    @Override
-    public int describeContents() {
-        return 0;
+    public List<SeriesCreator> getCreators() {
+        return created_by;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(backdrop_path);
-        parcel.writeStringList(episode_run_time);
-        parcel.writeString(first_air_date);
-        parcel.writeString(homepage);
-        parcel.writeInt(id);
-        parcel.writeByte((byte) (in_production ? 1 : 0));
-        parcel.writeStringList(languages);
-        parcel.writeString(last_air_date);
-        parcel.writeParcelable(last_episode_to_air, i);
-        parcel.writeString(name);
-        parcel.writeParcelable(next_episode_to_air, i);
-        parcel.writeInt(number_of_episodes);
-        parcel.writeInt(number_of_seasons);
-        parcel.writeStringList(origin_country);
-        parcel.writeString(original_language);
-        parcel.writeString(original_name);
-        parcel.writeString(overview);
-        parcel.writeString(popularity);
-        parcel.writeString(poster_path);
-        parcel.writeTypedList(seasons);
-        parcel.writeString(status);
-        parcel.writeString(type);
-        parcel.writeFloat(vote_average);
-        parcel.writeInt(vote_count);
+    public List<ProductionCompany> getProductionCompanies() {
+        return production_companies;
     }
+
 }

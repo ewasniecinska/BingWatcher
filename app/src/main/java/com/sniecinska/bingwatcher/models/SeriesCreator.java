@@ -5,10 +5,34 @@ package com.sniecinska.bingwatcher.models;
  */
 
 public class SeriesCreator {
-    int id;
-    String credit_id;
-    String name;
-    int gender;
-    String profile_path;
+    public int id;
+    public String credit_id;
+    public String name;
+    public int gender;
+    public String profile_path;
+
+    public SeriesCreator(){
+
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public String getCreditId() {
+        return credit_id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getGender(){
+        return gender;
+    }
+
+    public String getProfilePath(){
+        return profile_path;
+    }
 
 }

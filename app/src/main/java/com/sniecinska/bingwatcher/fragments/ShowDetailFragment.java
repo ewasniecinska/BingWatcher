@@ -87,6 +87,10 @@ public class ShowDetailFragment extends Fragment {
     TextView nextEpisodeNumber;
     @BindView(R.id.next_season_number)
     TextView nextSeasonNumber;
+    @BindView(R.id.next_episode_number_label)
+    TextView nextEpisodeNumberLabel;
+    @BindView(R.id.next_season_number_label)
+    TextView nextSeasonNumberLabel;
     @BindView(R.id.next_episode_date)
     TextView nextEpisodeDate;
     @BindView(R.id.toolbar)
@@ -193,7 +197,6 @@ public class ShowDetailFragment extends Fragment {
                 initFirebaseAnalytics();
                 initFirebaseDatabase();
                 getExternalId();
-
             }
 
             @Override
@@ -220,10 +223,12 @@ public class ShowDetailFragment extends Fragment {
     }
 
     public void updateEpisodeCard() {
-        if (tvSeriesDetails.getNextEpisode() == null) {
+        if (tvSeriesDetails.getNextEpisode() != null) {
+            updateViewForNextEpisode();
+        } else if(tvSeriesDetails.getLastEpisode() != null) {
             updateViewForLastEpisode();
         } else {
-            updateViewForNextEpisode();
+            nextEpisodeCard.setVisibility(View.GONE);
         }
     }
 
@@ -305,20 +310,25 @@ public class ShowDetailFragment extends Fragment {
     }
 
     public void updateAllSeasonsButton() {
-        allEpisodes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SeasonsListFragment fragment = new SeasonsListFragment();
-                bundle = new Bundle();
-                bundle.putParcelableArrayList(getString(R.string.SEASONS), (ArrayList<? extends Parcelable>) tvSeriesDetails.getSeasons());
-                bundle.putInt(getString(R.string.TV_ID), tvSeriesDetails.getId());
-                fragment.setArguments(bundle);
-
-                fragmentManager.beginTransaction()
-                        .addToBackStack(null)
-                        .replace(R.id.fragment_box, fragment).commit();
-            }
-        });
+        if(!tvSeriesDetails.getSeasons().isEmpty()){
+            allEpisodes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(!tvSeriesDetails.getSeasons().isEmpty()) {
+                        SeasonsListFragment fragment = new SeasonsListFragment();
+                        bundle = new Bundle();
+                        bundle.putParcelableArrayList(getString(R.string.SEASONS), (ArrayList<? extends Parcelable>) tvSeriesDetails.getSeasons());
+                        bundle.putInt(getString(R.string.TV_ID), tvSeriesDetails.getId());
+                        fragment.setArguments(bundle);
+                        fragmentManager.beginTransaction()
+                                .addToBackStack(null)
+                                .replace(R.id.fragment_box, fragment).commit();
+                    }
+                }
+            });
+        } else {
+            allEpisodes.setVisibility(View.GONE);
+        }
     }
 
     private void updateDataForTrackedShow() {

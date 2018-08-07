@@ -13,13 +13,13 @@ import java.util.Locale;
  */
 
 public class Season implements Parcelable {
-    Date air_date;
-    int episode_count;
-    String id;
-    String name;
-    String overview;
-    String poster_path;
-    int season_number;
+    public Date air_date;
+    public int episode_count;
+    public String id;
+    public String name;
+    public String overview;
+    public String poster_path;
+    public int season_number;
 
     public Season() {
 
@@ -66,9 +66,14 @@ public class Season implements Parcelable {
     }
 
     public String getAirDateUsFormat() {
-        DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
-        String airDate = format.format(air_date);
-        return airDate;
+        if(air_date != null){
+            DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+            String airDate = format.format(air_date);
+            return airDate;
+        } else {
+            return " ";
+        }
+
     }
 
 
