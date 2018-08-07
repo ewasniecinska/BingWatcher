@@ -43,7 +43,7 @@ public class TrackedShowsFragment extends Fragment {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     FragmentManager fragmentManager;
-    private FirebaseAuth mAuth;
+    FirebaseAuth mAuth;
     ArrayList<TvSeriesDetails> seriesList;
 
 
@@ -76,9 +76,11 @@ public class TrackedShowsFragment extends Fragment {
                     String uid = ds.child(getString(R.string.DB_CHILD_USER_ID)).getValue(String.class);
                     mAuth = FirebaseAuth.getInstance();
                     FirebaseUser currentUser = mAuth.getCurrentUser();
-                    if(uid.equals(currentUser.getUid())){
-                        TvSeriesDetails tvSeries = ds.child(getString(R.string.DB_CHILD_TVSERIES_DETAILS)).getValue(TvSeriesDetails.class);
-                        seriesList.add(tvSeries);
+                    if(currentUser != null) {
+                        if (uid.equals(currentUser.getUid())) {
+                            TvSeriesDetails tvSeries = ds.child(getString(R.string.DB_CHILD_TVSERIES_DETAILS)).getValue(TvSeriesDetails.class);
+                            seriesList.add(tvSeries);
+                        }
                     }
                 }
                 updateWidget();

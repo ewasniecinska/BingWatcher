@@ -12,7 +12,7 @@
     <string name="next_episode">Next Episode</string>
 
     <!-- Retrofit connection-->
-    <string name="api_key">API KEY HERE</string>
+    <string name="api_key">4681755dbe9184e2d9a51e441de6985b</string>
     <string name="based_url">https://api.themoviedb.org/3</string>
     <string name="image_based_url">http://image.tmdb.org/t/p/original</string>
     <string name="poster_based_url">http://image.tmdb.org/t/p/w185/</string>
