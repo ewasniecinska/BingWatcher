@@ -53,7 +53,7 @@ public class TrackedShowsFragment extends Fragment {
        View view = inflater.inflate(R.layout.fragment_tracked_shows, container, false);
        ButterKnife.bind(this, view);
 
-       ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+       initToolbar();
 
        fragmentManager = getFragmentManager();
        gridLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 1);
@@ -62,6 +62,11 @@ public class TrackedShowsFragment extends Fragment {
        getDataFromDb();
 
         return view;
+    }
+
+    private void initToolbar() {
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        getActivity().setTitle(getString(R.string.app_name));
     }
 
     private void getDataFromDb() {
