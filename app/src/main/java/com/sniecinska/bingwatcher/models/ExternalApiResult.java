@@ -8,12 +8,12 @@ import android.os.Parcelable;
  */
 
 public class ExternalApiResult implements Parcelable{
-    String imdb_id;
-    String freebase_mid;
-    String freebase_id;
-    int tvdb_id;
-    int tvrage_id;
-    int id;
+    public String imdb_id;
+    public String freebase_mid;
+    public String freebase_id;
+    public int tvdb_id;
+    public int tvrage_id;
+    public int id;
 
     protected ExternalApiResult(Parcel in) {
         imdb_id = in.readString();
@@ -53,5 +53,25 @@ public class ExternalApiResult implements Parcelable{
 
     public int getTvdbId() {
         return tvdb_id;
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public int getTvRageId(){
+        return tvrage_id;
+    }
+
+    public String getFreebaseId(){
+        return freebase_id;
+    }
+
+    public String getImdb(){
+        return imdb_id;
+    }
+
+    public String getFreebaseMid() {
+        return freebase_mid;
     }
 }

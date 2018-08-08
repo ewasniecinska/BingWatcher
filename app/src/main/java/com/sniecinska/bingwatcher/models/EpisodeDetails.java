@@ -14,18 +14,18 @@ import java.util.Locale;
  */
 
 public class EpisodeDetails implements Parcelable {
-    Date air_date;
-    List<Crew> crew;
-    int episode_number;
-    List<Actor> quest_stars;
-    String name;
-    String overview;
-    int id;
-    String production_code;
-    int season_number;
-    String still_path;
-    float vote_average;
-    int vote_count;
+    public Date air_date;
+    public List<Crew> crew;
+    public int episode_number;
+    public List<Actor> quest_stars;
+    public String name;
+    public String overview;
+    public int id;
+    public String production_code;
+    public int season_number;
+    public String still_path;
+    public float vote_average;
+    public int vote_count;
 
     protected EpisodeDetails(Parcel in) {
         episode_number = in.readInt();
@@ -71,6 +71,26 @@ public class EpisodeDetails implements Parcelable {
         parcel.writeInt(vote_count);
     }
 
+    public List<Actor> getQuestActors(){
+        return quest_stars;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getProductionCode() {
+        return production_code;
+    }
+
+    public float getVoteAverage() {
+        return vote_average;
+    }
+
+    public int getVoteCount() {
+        return vote_count;
+    }
+
     public int getEpisodeNumber() {
         return episode_number;
     }
@@ -80,9 +100,14 @@ public class EpisodeDetails implements Parcelable {
     }
 
     public String getAirDate() {
-        DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
-        String airDate = format.format(air_date);
-        return airDate;
+        try {
+            DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+            String airDate = format.format(air_date);
+            return airDate;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 

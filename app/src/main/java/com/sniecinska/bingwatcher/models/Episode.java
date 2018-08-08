@@ -15,17 +15,17 @@ import java.util.Locale;
  */
 
 public class Episode implements Parcelable {
-    Date air_date;
-    int episode_number;
-    String id;
-    String name;
-    String overview;
-    String production_code;
-    int season_number;
-    String show_id;
-    String still_path;
-    float vote_average;
-    int vote_count;
+    public Date air_date;
+    public int episode_number;
+    public String id;
+    public String name;
+    public String overview;
+    public String production_code;
+    public int season_number;
+    public String show_id;
+    public String still_path;
+    public float vote_average;
+    public int vote_count;
 
     public Episode() {
     }
@@ -76,14 +76,39 @@ public class Episode implements Parcelable {
         parcel.writeInt(vote_count);
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getShowId() {
+        return show_id;
+    }
+
+    public float getVoteAverage() {
+        return vote_average;
+    }
+
+    public int getVoteCount(){
+        return vote_count;
+    }
+
+    public String getProductionCode() {
+        return production_code;
+    }
+
     public String getName() {
         return name;
     }
 
     public String getAirDateUsFormat() {
-        DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
-        String airDate = format.format(air_date);
-        return airDate;
+        try {
+            DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+            String airDate = format.format(air_date);
+            return airDate;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public String getAirDay(){

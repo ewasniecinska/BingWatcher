@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,11 +112,11 @@ public class TrackedShowsFragment extends Fragment {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(getActivity().getApplicationContext());
         RemoteViews remoteViews = new RemoteViews(getActivity().getApplicationContext().getPackageName(), R.layout.app_widget);
         ComponentName thisWidget = new ComponentName(getActivity().getApplicationContext(), AppWidget.class);
-        remoteViews.setTextViewText(R.id.widget_list, getThreeNextShows());
+        remoteViews.setTextViewText(R.id.widget_list, getTrackedShows());
         appWidgetManager.updateAppWidget(thisWidget, remoteViews);
     }
 
-    public String getThreeNextShows(){
+    public String getTrackedShows(){
         String nextTvShows = "";
         StringBuilder sB = new StringBuilder(nextTvShows);
 

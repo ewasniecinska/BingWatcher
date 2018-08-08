@@ -8,12 +8,12 @@ import android.os.Parcelable;
  */
 
 public class Actor implements Parcelable {
-    int id;
-    String name;
-    String credit_id;
-    String character;
-    int order;
-    String profile_path;
+    public int id;
+    public String name;
+    public String credit_id;
+    public String character;
+    public int order;
+    public String profile_path;
 
     protected Actor(Parcel in) {
         id = in.readInt();
@@ -49,5 +49,29 @@ public class Actor implements Parcelable {
         parcel.writeString(character);
         parcel.writeInt(order);
         parcel.writeString(profile_path);
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public String getCreditId(){
+        return credit_id;
+    }
+
+    public String getCharacter() {
+        return character;
+    }
+
+    public int getOrder(){
+        return order;
+    }
+
+    public String getProfilePath(){
+        return profile_path;
     }
 }

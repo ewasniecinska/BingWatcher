@@ -10,10 +10,10 @@ import java.util.List;
  */
 
 public class PopularResult implements Parcelable{
-    int page;
-    String total_results;
-    String total_pages;
-    List<TvSeries> results;
+    public int page;
+    public String total_results;
+    public String total_pages;
+    public List<TvSeries> results;
 
     protected PopularResult(Parcel in) {
         page = in.readInt();
@@ -47,6 +47,13 @@ public class PopularResult implements Parcelable{
         parcel.writeTypedList(results);
     }
 
+    public String getTotalResults(){
+        return total_results;
+    }
+
+    public String getTotalPages(){
+        return total_pages;
+    }
     public int getPage() {
         return page;
     }

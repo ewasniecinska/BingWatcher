@@ -250,7 +250,9 @@ public class ShowDetailFragment extends Fragment {
         nextEpisodeName.setText(episode.getName());
         nextSeasonNumber.setText(Integer.toString(episode.getSeasonNumber()));
         nextEpisodeNumber.setText(Integer.toString(episode.getEpisodeNumber()));
-        nextEpisodeDate.setText(episode.getAirDateUsFormat());
+        if(episode.getAirDateUsFormat() != null){
+            nextEpisodeDate.setText(episode.getAirDateUsFormat());
+        }
         setEpisodeButton(episode);
     }
 
@@ -265,6 +267,7 @@ public class ShowDetailFragment extends Fragment {
                     showSnackBar(tvSeriesDetails.getName() + " "+ getString(R.string.snackbar_series_remove));
                     addToTrackedButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_tv));
                     deleteDataFromDatabase();
+                    addToTrackedButton.setContentDescription(getString(R.string.tv_add_tracked));
                     TRACED_MOVIE = false;
                 } else {
                     showSnackBar(tvSeriesDetails.getName() + " " + getString(R.string.snackbar_series_added));
@@ -276,6 +279,7 @@ public class ShowDetailFragment extends Fragment {
                         series = new DatabaseModel(currentUser.getUid(), String.valueOf(tvSeriesDetails.getId()), nextEpisode.getAirDate().getTime(), tvSeriesDetails);
                     }
                     databaseReference.push().setValue(series);
+                    addToTrackedButton.setContentDescription(getString(R.string.tv_series_remove));
                     TRACED_MOVIE = true;
                 }
             }
