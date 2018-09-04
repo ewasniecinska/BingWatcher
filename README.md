@@ -9,7 +9,7 @@ BingWatcher is an Android app to let you know about upcoming episodes of your fa
 - Material design
  
 ## Screenshots
-Include logo/demo screenshot etc.
+![BingWatcher Screens](https://image.ibb.co/kVWEsz/bingwatcher_screens.png)
 
 ## Built with
 
