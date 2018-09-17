@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,8 +85,9 @@ public class TrackedShowsListAdapter extends RecyclerView.Adapter<TrackedShowsLi
 
         Picasso.get()
                 .load(context.getString(R.string.poster_based_url) + list.get(position).getPosterPath())
-                .resize(42, 56)
                 .into(recipeHolder.poster);
+
+        Log.d("TEST",context.getString(R.string.poster_based_url) + list.get(position).getPosterPath() );
 
         if(list.get(position).getProductionStatus()){
             Episode nextEpisode = list.get(position).getNextEpisode();

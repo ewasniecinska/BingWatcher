@@ -75,7 +75,6 @@ public class SeriesListAdapter extends RecyclerView.Adapter<SeriesListAdapter.Re
 
         Picasso.get()
                 .load(context.getString(R.string.poster_based_url) + list.get(position).getPosterPath())
-                .resize(42, 56)
                 .into(recipeHolder.poster);
 
 

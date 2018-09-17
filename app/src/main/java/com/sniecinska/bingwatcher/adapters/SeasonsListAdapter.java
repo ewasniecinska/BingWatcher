@@ -74,7 +74,6 @@ public class SeasonsListAdapter extends RecyclerView.Adapter<SeasonsListAdapter.
 
         Picasso.get()
                 .load(context.getString(R.string.poster_based_url) + list.get(position).getPosterPath())
-                .resize(42, 56)
                 .into(recipeHolder.poster);
 
         recipeHolder.cardView.setOnClickListener(new View.OnClickListener() {

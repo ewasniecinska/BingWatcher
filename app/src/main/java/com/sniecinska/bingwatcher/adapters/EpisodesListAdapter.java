@@ -13,13 +13,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sniecinska.bingwatcher.R;
 import com.sniecinska.bingwatcher.fragments.EpisodeFragment;
 import com.sniecinska.bingwatcher.models.EpisodeDetails;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -50,8 +48,6 @@ public class EpisodesListAdapter extends RecyclerView.Adapter<EpisodesListAdapte
         TextView title;
         @BindView(R.id.card_view)
         CardView cardView;
-        @BindView(R.id.poster)
-        ImageView poster;
         @BindView(R.id.episodes_number)
         TextView episodesNumber;
 
@@ -76,10 +72,9 @@ public class EpisodesListAdapter extends RecyclerView.Adapter<EpisodesListAdapte
         recipeHolder.title.setText(list.get(position).getName());
         recipeHolder.episodesNumber.setText(list.get(position).getAirDate());
 
-        Picasso.get()
-                .load(context.getString(R.string.poster_based_url) + list.get(position).getStillPath())
-                .resize(42, 56)
-                .into(recipeHolder.poster);
+       // Picasso.get()
+               // .load(context.getString(R.string.image_based_url) + list.get(position).getStillPath())
+               // .into(recipeHolder.poster);
 
         recipeHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
