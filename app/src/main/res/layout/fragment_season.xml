@@ -12,14 +12,13 @@
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="202dp"
-        android:background="@color/primary"
-        android:theme="@style/Theme.AppCompat">
+        android:background="@color/primary">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:contentScrim="@color/primary"
+            app:contentScrim="@color/white"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
@@ -39,7 +38,8 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin" />
+                app:layout_collapseMode="pin"
+                app:titleTextColor="@color/primary_text" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>

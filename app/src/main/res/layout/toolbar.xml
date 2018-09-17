@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@color/primary"
     android:backgroundTint="@color/primary"
-    app:titleTextColor="@color/white"
+    app:titleTextColor="@color/primary_text"
     app:layout_scrollFlags="scroll|enterAlways|snap"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" />

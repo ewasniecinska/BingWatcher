@@ -79,6 +79,7 @@ public class TrackedShowsFragment extends Fragment {
         tvSeriesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("TEST", "1");
                 seriesList = new ArrayList<>();
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     String uid = ds.child(getString(R.string.DB_CHILD_USER_ID)).getValue(String.class);

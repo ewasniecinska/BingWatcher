@@ -125,6 +125,7 @@ public class EpisodeFragment extends Fragment {
             }
         });
 
+
         if(episodeDetails.getStillPath() == null || episodeDetails.getStillPath() == ""){
             appBarLayout.setExpanded(false);
         }

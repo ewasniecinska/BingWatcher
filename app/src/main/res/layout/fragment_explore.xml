@@ -20,7 +20,7 @@
         android:backgroundTint="@color/primary"
         android:elevation="@dimen/cardview_default_elevation"
         app:layout_scrollFlags="scroll|enterAlways|snap"
-        app:titleTextColor="@color/white"/>
+        app:titleTextColor="@color/primary_text"/>
 
     </android.support.design.widget.AppBarLayout>
 
